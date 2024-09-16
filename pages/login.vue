@@ -1,9 +1,9 @@
 <template>
   <div class="main flex justify-center items-center h-screen w-screen">
-    <div class="bg-white basis-1/3 rounded-lg p-8">
+    <div class="bg-white w-full max-w-xl rounded-lg p-8 m-2">
       <div class="card-body">
         <div class="flex justify-center">
-          <font-awesome-icon :icon="['fas', 'book']" class="text-5xl mx-auto"/>
+          <font-awesome-icon :icon="['fas', 'book-open']" class="text-primary text-5xl mx-auto"/>
         </div>
         <h1 class="font-syncopate text-3xl font-bold text-center my-10">Recipe Vault</h1>
         <form>
