@@ -4,5 +4,15 @@ export default defineNuxtConfig({
     devtools: {enabled: true},
     modules: [
         '@nuxtjs/tailwindcss'
-    ]
+    ],
+    app: {
+        head: {
+            link: [
+                {
+                    rel: 'stylesheet',
+                    href: 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Syncopate:wght@400;700&display=swap',
+                },
+            ],
+        },
+    },
 })
