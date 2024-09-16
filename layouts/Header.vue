@@ -1,8 +1,9 @@
 <template>
-  <header class="bg-white p-4 shadow">
+  <header class="sticky top-0 w-full bg-white p-4 shadow z-10">
     <div class="container bg-white flex items-center justify-between">
       <!-- Search Bar -->
-      <div class="flex items-center bg-gray-100 rounded-full px-4 py-2 shadow-sm border focus-within:border-primary focus-within:shadow-outline">
+      <div
+          class="flex items-center bg-gray-100 rounded-full px-4 py-2 shadow-sm border focus-within:border-primary focus-within:shadow-outline">
         <input
             type="text"
             placeholder="Search for ingredients"
@@ -10,7 +11,7 @@
         />
         <button class="text-gray-500 ml-2">
           <!-- Search Icon (SVG) -->
-          <font-awesome-icon :icon="['fas', 'magnifying-glass']" size="lg" />
+          <font-awesome-icon :icon="['fas', 'magnifying-glass']" size="lg"/>
         </button>
       </div>
 
