@@ -4,7 +4,7 @@
     <div class="relative">
       <img
           class="w-full h-44 object-cover rounded-lg"
-          src="https://via.placeholder.com/400x300"
+          src="assets/images/placeholder-recipe.jpg"
           alt="Dish Image"
       />
       <!-- Heart Icon (Favorite Button) -->

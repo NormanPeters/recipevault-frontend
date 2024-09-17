@@ -6,8 +6,7 @@ import HeaderIndex from "~/layouts/HeaderIndex.vue";
 
 <template>
   <HeaderIndex />
-  <div class="container bg-gray-300">
-    <div class="py-4 gap-4 grid xl:grid-cols-3 md:grid-cols-2">
+    <div class="container grid xl:grid-cols-3 md:grid-cols-2 py-4 gap-4">
       <RecipeCard/>
       <RecipeCard/>
       <RecipeCard/>
@@ -19,7 +18,6 @@ import HeaderIndex from "~/layouts/HeaderIndex.vue";
       <RecipeCard/>
       <RecipeCard/>
     </div>
-  </div>
 </template>
 
 <style scoped>
