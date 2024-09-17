@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
 import RecipeCard from "~/components/RecipeCard.vue";
-import Header from "~/layouts/Header.vue";
+import HeaderIndex from "~/layouts/HeaderIndex.vue";
 </script>
 
 <template>
-  <Header/>
+  <HeaderIndex />
   <div class="container bg-gray-300">
     <div class="py-4 gap-4 grid xl:grid-cols-3 md:grid-cols-2">
       <RecipeCard/>
