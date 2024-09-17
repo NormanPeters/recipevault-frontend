@@ -37,6 +37,3 @@
 <script setup>
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 </script>
-
-<style scoped>
-</style>
