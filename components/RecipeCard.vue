@@ -27,7 +27,7 @@
       </div>
 
       <!-- Description -->
-      <p class="text-gray-700 text-sm">
+      <p class="text-gray-700">
         Zwiebel, Semmelbrösel, gemischtes Hackfleisch, Basmatireis, Porree, körniger Senf, mittelscharfer Senf, Rinderbrühe, Petersilie, Schnittlauch, Honig, Karotte, Kochsahne
       </p>
     </div>

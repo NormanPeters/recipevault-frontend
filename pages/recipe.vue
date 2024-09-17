@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
-import HeaderRecipe from "~/layouts/HeaderRecipe.vue";
+import Header from "~/layouts/Header.vue";
 </script>
 
 <template>
   <div class="flex flex-col h-screen">
-    <HeaderRecipe/>
+    <Header/>
     <!-- Image and Ingredients -->
     <div class="container flex-grow grid xl:grid-cols-3 xl:grid-rows-3 py-4 gap-4">
       <div class="col-span-1 row-span-2 shadow rounded-lg bg-white p-4">

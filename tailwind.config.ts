@@ -14,7 +14,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 syncopate: ['Syncopate', 'sans-serif'],
-                rubik: ['Rubik', 'sans-serif'],
+                montserrat: ['Montserrat', 'sans-serif'],
             },
             colors: {
                 primary: {
