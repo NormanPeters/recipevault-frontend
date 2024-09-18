@@ -1,18 +1,15 @@
 // composables/useAuth.ts
+import { useAuthStore } from '~/stores/auth';
+
 export const useAuth = () => {
-    const auth = useState('auth', () => null);
-
-    const setAuth = (user) => {
-        auth.value = user;
-    };
-
-    const isAuthenticated = () => {
-        return !!auth.value;
-    };
+    const authStore = useAuthStore();
 
     return {
-        auth,
-        setAuth,
-        isAuthenticated,
+        auth: authStore.user,
+        setAuth: authStore.setAuth,
+        clearAuth: authStore.clearAuth,
+        isAuthenticated: authStore.isAuthenticated,
+        login: authStore.login,
+        logout: authStore.logout,
     };
 };

@@ -2,9 +2,6 @@
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
     devtools: {enabled: true},
-    modules: [
-        '@nuxtjs/tailwindcss'
-    ],
     app: {
         head: {
             link: [
@@ -15,7 +12,13 @@ export default defineNuxtConfig({
             ],
         },
     },
+    modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
     css: [
         '@fortawesome/fontawesome-svg-core/styles.css'
-    ]
+    ],
+    pinia: {
+        autoImports: [
+            'defineStore',
+        ],
+    },
 })
