@@ -1,6 +1,6 @@
 // services/userService.ts
 import axiosInstance from './axiosInstance';
-import { User, Recipe } from './interfaces';
+import { User } from './interfaces';
 
 export const userService = {
     // Register a new user
@@ -17,19 +17,19 @@ export const userService = {
 
     // Get user by ID (with recipes)
     async getUserById(id: number) {
-        const response = await axiosInstance.get<User>(`/${id}`);
+        const response = await axiosInstance.get<User>(`/user/${id}`);
         return response.data;
     },
 
     // Get all users (with recipes optionally)
     async getAllUsers() {
-        const response = await axiosInstance.get<User[]>('/');
+        const response = await axiosInstance.get<User[]>('/user');
         return response.data;
     },
 
     // Delete user by username
     async deleteUserByUsername(username: string) {
-        const response = await axiosInstance.delete<string>(`/${username}`);
+        const response = await axiosInstance.delete<string>(`/user/${username}`);
         return response.data;
     }
 };

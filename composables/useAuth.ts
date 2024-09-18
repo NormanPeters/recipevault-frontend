@@ -1,6 +1,6 @@
 // composables/useAuth.ts
 export const useAuth = () => {
-    const auth = useState('auth', () => null); // Initialwert für den Benutzer
+    const auth = useState('auth', () => null);
 
     const setAuth = (user) => {
         auth.value = user;

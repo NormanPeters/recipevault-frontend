@@ -23,8 +23,7 @@
         <button class="text-gray-500 hover:text-black">
           <font-awesome-icon :icon="['fas', 'filter']" size="lg" />
         </button>
-
-        <!-- Sort Icon -->
+        <!-- Settings Icon -->
         <button class="text-gray-500 hover:text-black">
           <font-awesome-icon :icon="['fas', 'gear']" size="lg" />
         </button>
