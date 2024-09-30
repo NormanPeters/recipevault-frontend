@@ -15,6 +15,12 @@ export const userService = {
         return response.data; // Will either return JWT token or "fail"
     },
 
+    // Logout user
+    async logout() {
+        const response = await axiosInstance.post<string>('/user/logout');
+        return response.data; // Optionally, return a success message
+    },
+
     // Get user by ID (with recipes)
     async getUserById(id: number) {
         const response = await axiosInstance.get<User>(`/user/${id}`);

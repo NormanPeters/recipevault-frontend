@@ -32,7 +32,6 @@ const password = ref('');
 const router = useRouter();
 const { login, isAuthenticated } = useAuth();
 
-// Login handler
 async function handleLogin() {
   try {
     await login({ username: username.value, password: password.value });
@@ -43,7 +42,6 @@ async function handleLogin() {
   }
 }
 
-// Redirect to home if user is already authenticated
 onMounted(() => {
   if (isAuthenticated.value) {
     router.push('/');

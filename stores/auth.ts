@@ -17,7 +17,10 @@ export const useAuthStore = defineStore('auth', () => {
 
     const user = ref(null);
 
-    const isAuthenticated = computed(() => !!token.value);
+    const isAuthenticated = computed(() => {
+        const jwtCookie = useCookie('jwt').value;
+        return !!jwtCookie;
+    });
 
     const setAuth = (authData: { token: string; user: any }) => {
         token.value = authData.token;
@@ -41,13 +44,18 @@ export const useAuthStore = defineStore('auth', () => {
 
     const logout = async () => {
         try {
+            await userService.logout();
+            clearJwtCookie();
             clearAuth();
-            // Optionally, make an API call to invalidate the token server-side
             await router.push('/login');
         } catch (error) {
             console.error('Logout failed:', error);
         }
     };
+
+    function clearJwtCookie() {
+        document.cookie = "jwt=; Max-Age=0; path=/; Secure; SameSite=Strict;";
+    }
 
     return {
         token,

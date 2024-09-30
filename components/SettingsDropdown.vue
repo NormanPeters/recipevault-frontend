@@ -42,20 +42,26 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { useAuth } from '~/composables/useAuth';
+import { useAuthStore } from '~/stores/auth'; // Import the auth store
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const isOpen = ref(false);
 const dropdown = ref(null);
-const { logout } = useAuth();
+const authStore = useAuthStore();
+const { logout } = authStore;
 
 function toggleDropdown() {
   isOpen.value = !isOpen.value;
 }
 
-function handleLogout() {
-  logout();
-  isOpen.value = false;
+async function handleLogout() {
+  try {
+    await logout();
+    isOpen.value = false;
+    console.log('Logout successful');
+  } catch (error) {
+    console.error('Logout failed:', error);
+  }
 }
 
 function handleClickOutside(event) {
@@ -72,7 +78,3 @@ onBeforeUnmount(() => {
   document.removeEventListener("click", handleClickOutside);
 });
 </script>
-
-<style scoped>
-/* Optional: Add any additional styling here */
-</style>
