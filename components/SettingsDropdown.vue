@@ -1,3 +1,4 @@
+<!--components/SettingsDropdown.vue-->
 <template>
   <div class="relative inline-block text-left" ref="dropdown">
     <!-- Settings Icon -->
@@ -40,21 +41,21 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { useAuthStore } from '~/stores/auth'; // Import the auth store
+import { useAuthStore } from '~/stores/auth';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-const isOpen = ref(false);
-const dropdown = ref(null);
+const isOpen = ref<boolean>(false);
+const dropdown = ref<HTMLElement | null>(null);
 const authStore = useAuthStore();
 const { logout } = authStore;
 
-function toggleDropdown() {
+function toggleDropdown(): void {
   isOpen.value = !isOpen.value;
 }
 
-async function handleLogout() {
+async function handleLogout(): Promise<void> {
   try {
     await logout();
     isOpen.value = false;
@@ -64,8 +65,8 @@ async function handleLogout() {
   }
 }
 
-function handleClickOutside(event) {
-  if (dropdown.value && !dropdown.value.contains(event.target)) {
+function handleClickOutside(event: Event): void {
+  if (dropdown.value && !dropdown.value.contains(event.target as Node)) {
     isOpen.value = false;
   }
 }

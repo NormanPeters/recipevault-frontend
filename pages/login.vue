@@ -1,3 +1,4 @@
+<!-- pages/login.vue -->
 <template>
   <div class="main flex justify-center items-center h-screen w-screen">
     <div class="bg-white w-full max-w-xl rounded-lg p-8 m-2">
@@ -21,18 +22,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuth } from '~/composables/useAuth';
+import { useAuthStore } from '~/stores/auth';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-const username = ref('');
-const password = ref('');
+const username = ref<string>('');
+const password = ref<string>('');
 const router = useRouter();
-const { login, isAuthenticated } = useAuth();
+const authStore = useAuthStore();
+const { login, isAuthenticated } = authStore;
 
-async function handleLogin() {
+async function handleLogin(): Promise<void> {
   try {
     await login({ username: username.value, password: password.value });
     console.log('Login successful');
@@ -46,6 +48,10 @@ onMounted(() => {
   if (isAuthenticated.value) {
     router.push('/');
   }
+});
+
+definePageMeta({
+  middleware: 'auth-redirect'
 });
 </script>
 
