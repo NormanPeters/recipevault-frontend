@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import type { NuxtPage } from 'nuxt/schema'
+
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
     devtools: {enabled: true},
@@ -21,7 +23,23 @@ export default defineNuxtConfig({
             'defineStore',
         ],
     },
-    router: {
-        middleware: ['auth'],
+    hooks: {
+        'pages:extend'(pages) {
+            function setMiddleware(pages: NuxtPage[]) {
+                for (const page of pages) {
+                    // Example condition: apply middleware to all routes except `/login`
+                    if (page.path !== '/login') {
+                        page.meta ||= {};
+                        page.meta.middleware = ['auth'];
+                    }
+                    if (page.children) {
+                        setMiddleware(page.children); // Recursively set middleware for child routes
+                    }
+                }
+            }
+
+            // Call the function to set middleware on all pages
+            setMiddleware(pages);
+        },
     },
 })
