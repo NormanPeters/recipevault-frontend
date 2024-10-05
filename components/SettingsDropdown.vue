@@ -1,4 +1,3 @@
-<!--components/SettingsDropdown.vue-->
 <template>
   <div class="relative inline-block text-left" ref="dropdown">
     <!-- Settings Icon -->
@@ -43,26 +42,16 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { useAuthStore } from '~/stores/auth';
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { useRouter } from 'vue-router';
+import { userService } from '@/services/userService';
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const isOpen = ref<boolean>(false);
 const dropdown = ref<HTMLElement | null>(null);
-const authStore = useAuthStore();
-const { logout } = authStore;
+const router = useRouter();
 
 function toggleDropdown(): void {
   isOpen.value = !isOpen.value;
-}
-
-async function handleLogout(): Promise<void> {
-  try {
-    await logout();
-    isOpen.value = false;
-    console.log('Logout successful');
-  } catch (error) {
-    console.error('Logout failed:', error);
-  }
 }
 
 function handleClickOutside(event: Event): void {
@@ -71,11 +60,20 @@ function handleClickOutside(event: Event): void {
   }
 }
 
+const handleLogout = async () => {
+  try {
+    await userService.logout();
+    await router.push('/login');
+  } catch (error) {
+    console.error('Logout failed:', error);
+  }
+};
+
 onMounted(() => {
-  document.addEventListener("click", handleClickOutside);
+  document.addEventListener('click', handleClickOutside);
 });
 
 onBeforeUnmount(() => {
-  document.removeEventListener("click", handleClickOutside);
+  document.removeEventListener('click', handleClickOutside);
 });
 </script>
