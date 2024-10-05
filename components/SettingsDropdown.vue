@@ -43,11 +43,12 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
-import { userService } from '@/services/userService';
+import {useAuthStore} from "~/stores/auth";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const isOpen = ref<boolean>(false);
 const dropdown = ref<HTMLElement | null>(null);
+const authStore = useAuthStore();
 const router = useRouter();
 
 function toggleDropdown(): void {
@@ -62,7 +63,7 @@ function handleClickOutside(event: Event): void {
 
 const handleLogout = async () => {
   try {
-    await userService.logout();
+    await authStore.logout();
     await router.push('/login');
   } catch (error) {
     console.error('Logout failed:', error);

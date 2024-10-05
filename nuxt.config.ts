@@ -22,6 +22,6 @@ export default defineNuxtConfig({
         ],
     },
     router: {
-        middleware: ['auth-redirect'],
+        middleware: ['auth'],
     },
 })

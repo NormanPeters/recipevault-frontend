@@ -1,6 +1,6 @@
 // services/userService.ts
 import axiosInstance from './axiosInstance';
-import { User } from './interfaces';
+import {User} from './interfaces';
 
 export const userService = {
     // Register a new user
@@ -11,14 +11,8 @@ export const userService = {
 
     // Login user
     async login(user: User) {
-        const response = await axiosInstance.post<string>('/user/login', user);
-        return response.data; // Will either return JWT token or "fail"
-    },
-
-    // Logout user
-    async logout() {
-        const response = await axiosInstance.post<string>('/user/logout');
-        return response.data; // Optionally, return a success message
+        const response = await axiosInstance.post<{ token: string }>('/user/login', user);
+        return response.data.token; // Will return JWT token
     },
 
     // Get user by ID (with recipes)

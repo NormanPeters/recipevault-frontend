@@ -24,16 +24,17 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import {useRouter} from 'vue-router';
-import {userService} from '@/services/userService';
+import {useAuthStore} from "@/stores/auth";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const username = ref<string>('');
 const password = ref<string>('');
+const authStore = useAuthStore();
 const router = useRouter();
 
 const handleLogin = async () => {
   try {
-    await userService.login({username: username.value, password: password.value});
+    await authStore.login(username.value, password.value);
     await router.push('/');
   } catch (error) {
     console.error('Error during login:', error);
