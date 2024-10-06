@@ -11,20 +11,21 @@
             class="bg-transparent outline-none text-gray-600 placeholder-gray-400 w-full leading-tight px-3"
         />
         <button class="text-gray-500 ml-2">
-          <font-awesome-icon :icon="['fas', 'magnifying-glass']" size="lg" />
+          <MagnifyingGlassIcon class="h-6 w-6"/>
         </button>
       </div>
 
       <!-- Buttons Section -->
       <div class="flex items-center space-x-4">
         <!-- Add Recipe Button -->
-        <PrimaryButton label="+ Add Recipe" />
+        <PrimaryButton label="+ Add Recipe"/>
         <!-- Filter Icon -->
         <button class="text-gray-500 hover:text-black">
-          <font-awesome-icon :icon="['fas', 'filter']" size="lg" />
+          <AdjustmentsHorizontalIcon class="h-6 w-6"/>
         </button>
+
         <!-- Settings Icon -->
-        <SettingsDropdown />
+        <SettingsDropdown/>
       </div>
     </div>
   </header>
@@ -37,13 +38,15 @@
 
       <!-- Buttons Section -->
       <div class="flex space-x-4">
-        <PrimaryButton label="Edit" />
-        <PrimaryButton label="Back" />
+        <PrimaryButton label="Edit"/>
+        <PrimaryButton label="Back"/>
       </div>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {AdjustmentsHorizontalIcon, MagnifyingGlassIcon} from '@heroicons/vue/24/solid';
 </script>
+
+

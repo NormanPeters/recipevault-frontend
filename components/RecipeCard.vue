@@ -10,7 +10,7 @@
       <!-- Heart Icon (Favorite Button) -->
       <div class="absolute top-2 right-2">
         <button class="bg-transparent rounded-full text-primary hover:text-primary-hover">
-          <font-awesome-icon :icon="['fas', 'heart']" size="lg"  />
+          <HeartIcon class="h-6 w-6"/>
         </button>
       </div>
     </div>
@@ -35,5 +35,5 @@
 </template>
 
 <script setup>
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { HeartIcon } from "@heroicons/vue/24/outline/index.js";
 </script>

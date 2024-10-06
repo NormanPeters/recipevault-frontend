@@ -7,7 +7,7 @@
         aria-haspopup="true"
         :aria-expanded="isOpen"
     >
-      <font-awesome-icon :icon="['fas', 'gear']" size="lg" />
+      <Cog6ToothIcon class="h-6 w-6"/>
     </button>
 
     <!-- Dropdown Menu -->
@@ -44,7 +44,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import {useAuthStore} from "~/stores/auth";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { Cog6ToothIcon } from "@heroicons/vue/24/outline";
 
 const isOpen = ref<boolean>(false);
 const dropdown = ref<HTMLElement | null>(null);

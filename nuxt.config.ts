@@ -15,9 +15,6 @@ export default defineNuxtConfig({
         },
     },
     modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
-    css: [
-        '@fortawesome/fontawesome-svg-core/styles.css'
-    ],
     pinia: {
         autoImports: [
             'defineStore',
@@ -30,7 +27,7 @@ export default defineNuxtConfig({
                     // Example condition: apply middleware to all routes except `/login`
                     if (page.path !== '/login') {
                         page.meta ||= {};
-                        page.meta.middleware = ['auth'];
+                        page.meta.middleware = ['auth']; // Set the auth middleware
                     }
                     if (page.children) {
                         setMiddleware(page.children); // Recursively set middleware for child routes

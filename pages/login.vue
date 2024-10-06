@@ -3,7 +3,7 @@
     <div class="bg-white w-full max-w-xl rounded-lg p-8 m-2">
       <div class="card-body">
         <div class="flex justify-center">
-          <font-awesome-icon :icon="['fas', 'book-open']" class="text-primary text-5xl mx-auto"/>
+          <BookOpenIcon class="h-12 w-12 text-primary"/>
         </div>
         <h1 class="font-syncopate text-3xl font-bold text-center my-10">Recipe Vault</h1>
         <form @submit.prevent="handleLogin">
@@ -25,7 +25,7 @@
 import {ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {useAuthStore} from "@/stores/auth";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {BookOpenIcon} from "@heroicons/vue/24/solid";
 
 const username = ref<string>('');
 const password = ref<string>('');
