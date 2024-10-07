@@ -1,24 +1,26 @@
 // stores/auth.ts
 import { defineStore } from 'pinia';
-import { userService } from '@/services/userService'; // Import your userService
+import { userService } from '@/services/userService';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         token: null as string | null,
+        username: null as string | null,
     }),
     actions: {
-        setToken(token: string) {
+        setToken(token: string, username: string) {
             this.token = token;
+            this.username = username;
         },
-        clearToken() {
-            this.token = null; // Clear the token
+        clearAuth() {
+            this.token = null;
+            this.username = null;
         },
 
         async login(username: string, password: string) {
             try {
                 const token = await userService.login({ username, password });
-                this.setToken(token);
-
+                this.setToken(token, username);
                 console.log('Login successful');
             } catch (error) {
                 console.error('Login failed:', error);
@@ -27,12 +29,13 @@ export const useAuthStore = defineStore('auth', {
         },
 
         logout() {
-            this.clearToken();
+            this.clearAuth(); // Clear both token and username
             console.log('Logout successful');
         },
     },
     getters: {
-        isAuthenticated: (state) => !!state.token, // Check if the user is authenticated
-        getToken: (state) => state.token, // Get the token
+        isAuthenticated: (state) => !!state.token,
+        getToken: (state) => state.token,
+        getUsername: (state) => state.username,
     },
 });
