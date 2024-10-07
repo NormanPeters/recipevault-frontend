@@ -1,11 +1,11 @@
-// services/interfaces.ts
-interface User {
+// services/types.ts
+export interface User {
     id: number;
     username: string;
     recipes: Recipe[];
 }
 
-interface Recipe {
+export interface Recipe {
     recipeId: number;
     user: User;
     imageUrl: string;
@@ -17,7 +17,7 @@ interface Recipe {
     steps: RecipeStep[];
 }
 
-interface Ingredient {
+export interface Ingredient {
     ingredientId: number;
     title: string;
     amount: number;
@@ -25,14 +25,14 @@ interface Ingredient {
     recipe: Recipe;
 }
 
-interface NutritionalValue {
+export interface NutritionalValue {
     nutritionalValueId: number;
     title: string;
     amount: number;
     recipe: Recipe;
 }
 
-interface RecipeStep {
+export interface RecipeStep {
     stepId: number;
     stepDescription: string;
     stepNumber: number;

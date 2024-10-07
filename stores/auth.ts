@@ -1,6 +1,6 @@
 // stores/auth.ts
 import { defineStore } from 'pinia';
-import { userService } from '@/services/userService';
+import { api } from '~/services/api';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', {
 
         async login(username: string, password: string) {
             try {
-                const token = await userService.login({ username, password });
+                const token = await api.login({ username, password });
                 this.setToken(token, username);
                 console.log('Login successful');
             } catch (error) {
