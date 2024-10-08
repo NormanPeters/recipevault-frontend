@@ -20,7 +20,6 @@ export const useRecipeStore = defineStore('recipe', {
                 }
             } catch (error) {
                 console.error('Error fetching recipes:', error);
-                // You can handle errors more gracefully here, like showing a user-friendly message
                 throw error;
             }
         },

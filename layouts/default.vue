@@ -1,7 +1,6 @@
 <!-- @/layouts/default.vue -->
 <template>
   <div v-if="isAuthenticated">
-    <!-- You can add header footer sidebars etc. -->
     <NuxtPage />
     <DialogWrapper />
   </div>
@@ -19,12 +18,12 @@ const router = useRouter();
 const isAuthenticated = ref<boolean | null>(null);
 
 onMounted(() => {
-  const token = localStorage.getItem("authToken");
-  if (token) {
-    isAuthenticated.value = true;
-  } else {
-    isAuthenticated.value = false;
-    router.push("/login");
-  }
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      isAuthenticated.value = true;
+    } else {
+      isAuthenticated.value = false;
+      router.push("/login");
+    }
 });
 </script>

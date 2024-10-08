@@ -1,6 +1,6 @@
 <!-- @/components/SettingsDropdown.vue -->
 <template>
-  <div class="relative inline-block text-left" ref="dropdown">
+  <div class="relative inline-flex text-left" ref="dropdown">
     <!-- Settings Icon -->
     <button
         @click="toggleDropdown"
