@@ -4,8 +4,7 @@
   <header v-if="$route.path === '/'" class="sticky top-0 w-full bg-white p-4 shadow z-10">
     <div class="container bg-white flex items-center justify-between">
       <!-- Search Bar -->
-      <div
-          class="flex items-center bg-gray-100 rounded-full px-4 py-2 shadow-sm border focus-within:border-primary focus-within:shadow-outline">
+      <div class="flex items-center bg-gray-100 rounded-full px-4 py-2 shadow-sm border focus-within:border-primary focus-within:shadow-outline">
         <input
             type="text"
             placeholder="Search for ingredients"
@@ -31,22 +30,33 @@
   </header>
 
   <!-- Header Recipe -->
-  <header v-if="$route.path === '/recipe'" class="w-full bg-white p-4 shadow z-10">
+  <header v-else class="w-full bg-white p-4 shadow z-10">
     <div class="container bg-white flex items-center justify-between">
       <!-- Recipe Title -->
-      <h1 class="text-3xl font-bold leading-tight">Hackbällchen mit Senfsoße</h1>
+      <h1 class="text-3xl font-bold leading-tight">{{ $route.params.id ? recipeTitle : '' }}</h1>
 
       <!-- Buttons Section -->
       <div class="flex space-x-4">
         <PrimaryButton label="Edit"/>
-        <PrimaryButton label="Back"/>
+        <PrimaryButton label="Back" @click="router.push('/')"/>
       </div>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import {AdjustmentsHorizontalIcon, MagnifyingGlassIcon} from '@heroicons/vue/24/solid';
+import { ref, watch } from 'vue';
+import { AdjustmentsHorizontalIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/solid';
+import { useRecipeStore } from '~/stores/recipe';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const recipeStore = useRecipeStore();
+const recipeTitle = ref('');
+
+watch(() => recipeStore.selectedRecipe, (newRecipe) => {
+  if (newRecipe) {
+    recipeTitle.value = newRecipe.title;
+  }
+});
 </script>
-
-

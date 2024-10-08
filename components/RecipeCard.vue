@@ -1,6 +1,5 @@
-<!-- @/components/RecipeCard.vue -->
 <template>
-  <div class="max-w-full max-h-96 rounded-lg overflow-hidden shadow bg-white p-4">
+  <NuxtLink :to="`/recipe/${recipe.recipeId}`" class="block max-w-full max-h-96 rounded-lg overflow-hidden shadow bg-white p-4 hover:shadow-lg transition-shadow duration-300">
     <!-- Image Section -->
     <div class="relative">
       <img
@@ -30,7 +29,7 @@
       <!-- Description -->
       <p class="text-gray-700">{{ recipe.description }}</p>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
