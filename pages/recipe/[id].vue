@@ -7,7 +7,7 @@
       <div class="col-span-1 row-span-2 shadow rounded-lg bg-white p-4">
         <img
             class="w-full h-44 object-cover rounded-lg mb-4"
-            :src="recipe.imageUrl || '../../assets/images/placeholder-recipe.jpg'"
+            :src="recipe.imageUrl || '/images/placeholder-recipe.jpg'"
             alt="Dish Image"
         />
         <h2 class="text-lg font-bold">Ingredients</h2>

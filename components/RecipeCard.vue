@@ -1,10 +1,11 @@
+<!-- components/RecipeCard.vue -->
 <template>
   <NuxtLink :to="`/recipe/${recipe.recipeId}`" class="block max-w-full max-h-96 rounded-lg overflow-hidden shadow bg-white p-4 hover:shadow-lg transition-shadow duration-300">
     <!-- Image Section -->
     <div class="relative">
       <img
+          :src="recipe.imageUrl && recipe.imageUrl !== '' ? recipe.imageUrl : '/images/placeholder-recipe.jpg'"
           class="w-full h-44 object-cover rounded-lg"
-          :src="recipe.imageUrl || 'assets/images/placeholder-recipe.jpg'"
           alt="Dish Image"
       />
       <!-- Heart Icon (Favorite Button) -->
