@@ -20,23 +20,4 @@ export default defineNuxtConfig({
             'defineStore',
         ],
     },
-    hooks: {
-        'pages:extend'(pages) {
-            function setMiddleware(pages: NuxtPage[]) {
-                for (const page of pages) {
-                    // Example condition: apply middleware to all routes except `/login`
-                    if (page.path !== '/login') {
-                        page.meta ||= {};
-                        page.meta.middleware = ['auth']; // Set the auth middleware
-                    }
-                    if (page.children) {
-                        setMiddleware(page.children); // Recursively set middleware for child routes
-                    }
-                }
-            }
-
-            // Call the function to set middleware on all pages
-            setMiddleware(pages);
-        },
-    },
 })

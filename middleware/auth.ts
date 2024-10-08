@@ -1,16 +1,26 @@
 // middleware/auth.ts
-import { useAuthStore } from '~/stores/auth';
+import * as jwtDecode from 'jwt-decode';
 
 export default defineNuxtRouteMiddleware((to, from) => {
-    const authStore = useAuthStore();
+    const token = localStorage.getItem('authToken');
 
-    // If the user is NOT authenticated and trying to access any page other than /login, redirect to /login
-    if (!authStore.isAuthenticated && to.path !== '/login') {
+    if (token) {
+        try {
+            const decodedToken = jwtDecode(token);
+            const currentTime = Date.now() / 1000;
+
+            if (decodedToken.exp < currentTime) {
+                localStorage.removeItem('authToken');
+                console.log('Token expired');
+                return navigateTo('/login');
+            }
+        } catch (error) {
+            localStorage.removeItem('authToken');
+            console.error('Error decoding token:', error);
+            return navigateTo('/login');
+        }
+    } else if (to.name !== 'login') {
+        console.log('No token found');
         return navigateTo('/login');
-    }
-
-    // If the user is authenticated and tries to access /login, redirect to the home page
-    if (authStore.isAuthenticated && to.path === '/login') {
-        return navigateTo('/');
     }
 });

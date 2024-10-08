@@ -1,4 +1,4 @@
-<!-- components/TextInput.vue -->
+<!-- @/components/TextInput.vue -->
 <template>
   <div class="mb-4">
     <label class="block text-sm font-bold mb-2 ml-2" :for="id">

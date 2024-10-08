@@ -2,7 +2,6 @@
 import { defineStore } from 'pinia';
 import { api } from '~/services/api';
 import { Recipe } from '~/services/types';
-import { useAuthStore } from './auth';
 
 export const useRecipeStore = defineStore('recipe', {
     state: () => ({
@@ -11,44 +10,44 @@ export const useRecipeStore = defineStore('recipe', {
     }),
     actions: {
         async fetchRecipes() {
-            const authStore = useAuthStore();
-            if (authStore.isAuthenticated) {
-                try {
-                    this.recipes = await api.getRecipesByUserId();
+            try {
+                const response = await api.getRecipesByUserId();
+                if (response && Array.isArray(response)) {
+                    this.recipes = response;
                     console.log('Recipes fetched:', this.recipes);
-                } catch (error) {
-                    console.error('Error fetching recipes:', error);
-                    throw error;
+                } else {
+                    console.warn('Unexpected response format:', response);
                 }
-            } else {
-                console.warn('User is not authenticated. Cannot fetch recipes.');
+            } catch (error) {
+                console.error('Error fetching recipes:', error);
+                // You can handle errors more gracefully here, like showing a user-friendly message
+                throw error;
             }
         },
         async fetchRecipeById(id: number) {
-            const authStore = useAuthStore();
-            if (authStore.isAuthenticated) {
-                try {
-                    this.selectedRecipe = await api.getRecipeById(id);
-                } catch (error) {
-                    console.error('Error fetching recipe by ID:', error);
-                    throw error;
+            try {
+                const recipe = await api.getRecipeById(id);
+                if (recipe) {
+                    this.selectedRecipe = recipe;
+                } else {
+                    console.warn('Recipe not found:', id);
                 }
-            } else {
-                console.warn('User is not authenticated. Cannot fetch recipe.');
+            } catch (error) {
+                console.error('Error fetching recipe by ID:', error);
+                throw error;
             }
         },
         async createRecipe(recipe: Recipe) {
-            const authStore = useAuthStore();
-            if (authStore.isAuthenticated) {
-                try {
-                    const newRecipe = await api.createRecipe(recipe);
+            try {
+                const newRecipe = await api.createRecipe(recipe);
+                if (newRecipe) {
                     this.recipes.push(newRecipe);
-                } catch (error) {
-                    console.error('Error creating recipe:', error);
-                    throw error;
+                } else {
+                    console.warn('Failed to create recipe');
                 }
-            } else {
-                console.warn('User is not authenticated. Cannot create recipe.');
+            } catch (error) {
+                console.error('Error creating recipe:', error);
+                throw error;
             }
         },
     },

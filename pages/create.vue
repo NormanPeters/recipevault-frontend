@@ -1,3 +1,4 @@
+<!-- @/pages/create.vue -->
 <script setup lang="ts">
 
 </script>

@@ -1,4 +1,4 @@
-<!-- /components/SettingsDropdown.vue -->
+<!-- @/components/SettingsDropdown.vue -->
 <template>
   <div class="relative inline-block text-left" ref="dropdown">
     <!-- Settings Icon -->
@@ -44,12 +44,10 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
-import {useAuthStore} from "~/stores/auth";
 import { Cog6ToothIcon } from "@heroicons/vue/24/outline";
 
 const isOpen = ref<boolean>(false);
 const dropdown = ref<HTMLElement | null>(null);
-const authStore = useAuthStore();
 const router = useRouter();
 
 function toggleDropdown(): void {
@@ -62,10 +60,11 @@ function handleClickOutside(event: Event): void {
   }
 }
 
-const handleLogout = async () => {
+const handleLogout = () => {
   try {
-    await authStore.logout();
-    await router.push('/login');
+    localStorage.removeItem('authToken');
+    router.push('/login');
+    console.log('Logout successful');
   } catch (error) {
     console.error('Logout failed:', error);
   }

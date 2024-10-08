@@ -1,3 +1,4 @@
+<!-- @/pages/signup.vue -->
 <script setup lang="ts">
 
 </script>

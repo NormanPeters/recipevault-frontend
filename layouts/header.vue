@@ -1,3 +1,4 @@
+<!-- @/layouts/header.vue -->
 <template>
   <!-- Header Index -->
   <header v-if="$route.path === '/'" class="sticky top-0 w-full bg-white p-4 shadow z-10">

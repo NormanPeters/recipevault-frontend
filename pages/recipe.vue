@@ -1,3 +1,4 @@
+<!-- @/pages/recipe.vue -->
 <script setup lang="ts">
 
 import Header from "~/layouts/header.vue";

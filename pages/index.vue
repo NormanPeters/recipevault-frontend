@@ -1,4 +1,4 @@
-<!-- pages/index.vue -->
+<!-- @/pages/index.vue -->
 <template>
   <div class="flex flex-col h-screen">
     <HeaderIndex/>
@@ -10,17 +10,13 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useAuthStore} from "~/stores/auth";
 import { useRecipeStore } from '~/stores/recipe';
 import RecipeCard from '~/components/RecipeCard.vue';
 import HeaderIndex from '~/layouts/header.vue';
-
 
 const recipeStore = useRecipeStore();
 onMounted(async () => {
   await recipeStore.fetchRecipes();
 });
-const authStore = useAuthStore();
-console.log("isAuthenticated:" + authStore.isAuthenticated);
 
 </script>
