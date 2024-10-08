@@ -12,9 +12,9 @@ export interface Recipe {
     title: string;
     description: string;
     isFavourite: boolean;
-    ingredients: Ingredient[];
-    nutritionalValues: NutritionalValue[];
-    steps: RecipeStep[];
+    ingredients?: Ingredient[];
+    nutritionalValues?: NutritionalValue[];
+    steps?: RecipeStep[];
 }
 
 export interface Ingredient {

@@ -1,3 +1,4 @@
+<!--components/PrimaryButton.vue-->
 <template>
   <button
       class="bg-primary hover:bg-primary-hover text-sm text-white py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"

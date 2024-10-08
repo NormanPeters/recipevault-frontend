@@ -40,6 +40,8 @@ const handleLogin = async () => {
     console.error('Error during login:', error);
   }
 };
+
+console.log("isAuthenticated:" + authStore.isAuthenticated);
 </script>
 
 <style scoped>

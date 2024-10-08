@@ -1,3 +1,4 @@
+<!-- /components/SettingsDropdown.vue -->
 <template>
   <div class="relative inline-block text-left" ref="dropdown">
     <!-- Settings Icon -->

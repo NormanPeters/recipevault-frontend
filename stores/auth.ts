@@ -4,17 +4,25 @@ import { api } from '~/services/api';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        token: null as string | null,
-        username: null as string | null,
+        token: import.meta.client ? localStorage.getItem('jwtToken') as string | null : null,
+        username: import.meta.client ? localStorage.getItem('username') as string | null : null,
     }),
     actions: {
         setToken(token: string, username: string) {
             this.token = token;
             this.username = username;
+            if (import.meta.client) {
+                localStorage.setItem('jwtToken', token); // Store the token in localStorage
+                localStorage.setItem('username', username); // Store the username in localStorage
+            }
         },
         clearAuth() {
             this.token = null;
             this.username = null;
+            if (import.meta.client) {
+                localStorage.removeItem('jwtToken'); // Remove the token from localStorage
+                localStorage.removeItem('username'); // Remove the username from localStorage
+            }
         },
 
         async login(username: string, password: string) {

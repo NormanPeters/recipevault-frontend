@@ -23,9 +23,8 @@
         <button class="text-gray-500 hover:text-black">
           <AdjustmentsHorizontalIcon class="h-6 w-6"/>
         </button>
-
         <!-- Settings Icon -->
-        <SettingsDropdown/>
+        <SettingsDropdown />
       </div>
     </div>
   </header>
