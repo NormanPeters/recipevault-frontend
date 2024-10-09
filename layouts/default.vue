@@ -1,7 +1,7 @@
 <!-- @/layouts/default.vue -->
 <template>
   <div v-if="isAuthenticated">
-    <NuxtPage />
+    <slot />
     <DialogWrapper />
   </div>
   <div v-else>

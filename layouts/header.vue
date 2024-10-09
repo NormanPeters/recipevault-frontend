@@ -38,7 +38,7 @@
       <!-- Buttons Section -->
       <div class="flex space-x-4">
         <PrimaryButton label="Edit"/>
-        <PrimaryButton label="Back" @click="router.push('/')"/>
+        <NuxtLink to="/"><PrimaryButton label="Back"/></NuxtLink>
       </div>
     </div>
   </header>
