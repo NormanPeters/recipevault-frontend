@@ -59,10 +59,23 @@
 
       <!-- Nutritional Values Section -->
       <div class="col-span-1 row-span-1 shadow rounded-lg bg-white p-4">
-        <h2 class="text-lg font-bold">Nutritional Values</h2>
-        <ul class="list-disc ml-4 mt-2">
-          <li v-for="value in recipe.nutritionalValues" :key="value.name">{{ value.title }} : {{ value.amount }}</li>
-        </ul>
+        <h2 class="text-lg font-bold text-primary mb-3">Nutritional Values</h2>
+        <table class="w-full text-left">
+          <thead>
+          <tr>
+            <th class="text-black font-bold pb-1"></th>
+            <th class="text-black font-bold pb-1">100g</th>
+            <th class="text-black font-bold pb-1">Portion (~750g)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="value in nutritionalValuesPerPortion" :key="value.title">
+            <td class="py-1 text-gray-800">{{ value.title }}</td>
+            <td class="py-1 text-gray-800">{{ value.amount }}g</td>
+            <td class="py-1 text-gray-800">{{ value.amountPerPortion }}g</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -74,11 +87,13 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'vue-router';
 import { onMounted, computed } from 'vue';
 import { useRecipeStore } from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
 
 const recipeStore = useRecipeStore();
+const route = useRoute();
 const recipeId = Number(route.params.id);
 
 onMounted(async () => {
@@ -87,4 +102,17 @@ onMounted(async () => {
 });
 
 const recipe = computed(() => recipeStore.selectedRecipe);
+
+// Calculate nutritional values per portion
+const portionSize = 750;
+const nutritionalValuesPerPortion = computed(() => {
+  return recipe.value?.nutritionalValues?.map(value => {
+    const amountPerPortion = (value.amount / 100) * portionSize;
+    return {
+      title: value.title,
+      amount: value.amount,
+      amountPerPortion: amountPerPortion.toFixed(1)
+    };
+  }) || [];
+});
 </script>
