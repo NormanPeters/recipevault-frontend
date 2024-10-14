@@ -1,7 +1,7 @@
 <!-- @/pages/recipe/[id].vue -->
 <template>
   <div class="flex flex-col h-screen">
-    <Header />
+    <Header/>
     <div v-if="recipe" class="container flex-grow grid xl:grid-cols-3 xl:grid-rows-3 py-4 gap-4">
       <!-- Recipe Image and Ingredients Section -->
       <div class="col-span-1 row-span-2 shadow rounded-lg bg-white p-4">
@@ -39,11 +39,17 @@
 
       <!-- Manual Section -->
       <div class="flex flex-col col-span-2 row-span-3 shadow rounded-lg bg-white p-4">
-        <h2 class="text-lg text-primary font-bold mb-3">What You Need</h2>
+        <!-- Tools -->
+        <h2 class="text-lg text-primary font-bold">What You Need</h2>
+        <ul class="ml- 4 mt-2 mb-2">
+          <li v-for="tool in recipe.tools" class="list-none">{{ tool.amount }} {{ tool.title }}</li>
+        </ul>
+        <!-- Manual Steps -->
         <h2 class="text-lg text-primary font-bold">Manual</h2>
         <ol class="list-decimal ml-4 mt-2">
           <li v-for="(step, index) in recipe.steps" :key="index">{{ step.stepDescription }}</li>
         </ol>
+
         <!-- Input positioned at the bottom -->
         <div class="mt-auto">
           <label class="block text-lg text-primary font-bold mb-2 ml-2" for="source">Source</label>
@@ -88,9 +94,9 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
-import { onMounted, computed } from 'vue';
-import { useRecipeStore } from '~/stores/recipe';
+import {useRoute} from 'vue-router';
+import {onMounted, computed} from 'vue';
+import {useRecipeStore} from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
 
 const recipeStore = useRecipeStore();

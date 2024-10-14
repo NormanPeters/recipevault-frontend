@@ -15,6 +15,7 @@ export interface Recipe {
     ingredients: Ingredient[];
     nutritionalValues: NutritionalValue[];
     steps: RecipeStep[];
+    tools: Tool[];
 }
 
 export interface Ingredient {
