@@ -39,13 +39,14 @@
 
       <!-- Manual Section -->
       <div class="flex flex-col col-span-2 row-span-3 shadow rounded-lg bg-white p-4">
-        <h2 class="text-lg font-bold">Manual</h2>
+        <h2 class="text-lg text-primary font-bold mb-3">What You Need</h2>
+        <h2 class="text-lg text-primary font-bold">Manual</h2>
         <ol class="list-decimal ml-4 mt-2">
-          <li v-for="(step, index) in recipe.steps" :key="index">{{ step.description }}</li>
+          <li v-for="(step, index) in recipe.steps" :key="index">{{ step.stepDescription }}</li>
         </ol>
         <!-- Input positioned at the bottom -->
         <div class="mt-auto">
-          <label class="block text-lg font-bold mb-2 ml-2" for="source">Source</label>
+          <label class="block text-lg text-primary font-bold mb-2 ml-2" for="source">Source</label>
           <input
               id="source"
               type="text"
@@ -71,8 +72,8 @@
           <tbody>
           <tr v-for="value in nutritionalValuesPerPortion" :key="value.title">
             <td class="py-1 text-gray-800">{{ value.title }}</td>
-            <td class="py-1 text-gray-800">{{ value.amount }}g</td>
-            <td class="py-1 text-gray-800">{{ value.amountPerPortion }}g</td>
+            <td class="py-1 text-gray-800">{{ value.amount }}</td>
+            <td class="py-1 text-gray-800">{{ value.amountPerPortion }}</td>
           </tr>
           </tbody>
         </table>
@@ -98,7 +99,6 @@ const recipeId = Number(route.params.id);
 
 onMounted(async () => {
   await recipeStore.fetchRecipeById(recipeId);
-  console.log(recipeStore.selectedRecipe);
 });
 
 const recipe = computed(() => recipeStore.selectedRecipe);

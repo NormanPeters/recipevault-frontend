@@ -38,3 +38,10 @@ export interface RecipeStep {
     stepNumber: number;
     recipe: Recipe;
 }
+
+export interface Tool {
+    toolId: number;
+    title: string;
+    amount: number;
+    recipe: Recipe;
+}

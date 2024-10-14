@@ -22,7 +22,7 @@
       <h2 class="text-lg font-bold text-gray-800">{{ recipe.title }}</h2>
 
       <!-- Time and Calories (Example placeholders, adjust based on your data) -->
-      <div class="flex justify-between text-gray-500 text-sm my-2">
+      <div class="flex justify-between text-gray-800 text-sm my-2">
         <span>30 - 40 Minuten</span>
         <span>4228 kj / 1011 kcal</span>
       </div>

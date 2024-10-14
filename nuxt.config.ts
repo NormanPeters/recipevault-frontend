@@ -2,8 +2,9 @@
 import type { NuxtPage } from 'nuxt/schema'
 
 export default defineNuxtConfig({
-    compatibilityDate: '2024-04-03',
+    modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
     devtools: {enabled: true},
+    compatibilityDate: '2024-04-03',
     app: {
         head: {
             link: [
@@ -14,7 +15,6 @@ export default defineNuxtConfig({
             ],
         },
     },
-    modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
     pinia: {
         autoImports: [
             'defineStore',
