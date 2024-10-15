@@ -30,7 +30,7 @@
   </header>
 
   <!-- Header Recipe -->
-  <header v-else-if="$route.path === '/recipe/[id]'" class="w-full bg-white p-4 shadow z-10">
+  <header v-else-if="$route.path.match(/^\/recipe\/\d+$/)" class="w-full bg-white p-4 shadow z-10">
     <div class="container bg-white flex items-center justify-between">
       <!-- Recipe Title -->
       <h1 class="text-3xl font-bold leading-tight">{{ $route.params.id ? recipeTitle : '' }}</h1>
