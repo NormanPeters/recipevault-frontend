@@ -1,12 +1,11 @@
 <!-- @/pages/create.vue -->
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useRecipeStore } from '~/stores/recipe';
+import {ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {useRecipeStore} from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
-import { Recipe } from '~/services/types';
-import { TrashIcon } from "@heroicons/vue/24/outline";
-import {AdjustmentsHorizontalIcon} from "@heroicons/vue/24/solid";
+import {Recipe} from '~/services/types';
+import {TrashIcon} from "@heroicons/vue/24/outline";
 
 const router = useRouter();
 const recipeStore = useRecipeStore();
@@ -24,12 +23,12 @@ const createNewRecipe = (): Recipe => ({
 
 const newRecipe = ref<Recipe>(createNewRecipe());
 
-// Methods for adding new entries
+// Ingredient Methods
 const addIngredient = () => {
   if (!newRecipe.value.ingredients) {
     newRecipe.value.ingredients = [];
   }
-  newRecipe.value.ingredients.push({ title: '', amount: 0, unit: '', recipe: {} as Recipe });
+  newRecipe.value.ingredients.push({title: '', amount: 0, unit: 'g', recipe: {} as Recipe});
 };
 
 const removeIngredient = (index: number) => {
@@ -38,31 +37,36 @@ const removeIngredient = (index: number) => {
   }
 };
 
+const measurementUnits = ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
+
+// Tool Methods
 const addTool = () => {
   if (!newRecipe.value.tools) {
     newRecipe.value.tools = [];
   }
-  newRecipe.value.tools.push({ title: '', amount: 0, recipe: {} as Recipe });
+  newRecipe.value.tools.push({title: '', amount: 0, recipe: {} as Recipe});
 };
 
+// Step Methods
 const addStep = () => {
   if (!newRecipe.value.steps) {
     newRecipe.value.steps = [];
   }
-  newRecipe.value.steps.push({ stepDescription: '', stepNumber: 0, recipe: {} as Recipe });
+  newRecipe.value.steps.push({stepDescription: '', stepNumber: 0, recipe: {} as Recipe});
 };
 
+// Nutritional Value Methods
 const addNutritionalValue = () => {
   if (!newRecipe.value.nutritionalValues) {
     newRecipe.value.nutritionalValues = [];
   }
-  newRecipe.value.nutritionalValues.push({ title: '', amount: 0, recipe: {} as Recipe });
+  newRecipe.value.nutritionalValues.push({title: '', amount: 0, recipe: {} as Recipe});
 };
 
 const submitRecipe = async () => {
   try {
     await recipeStore.createRecipe(newRecipe.value);
-    router.push('/');
+    await router.push('/');
   } catch (error) {
     console.error('Error creating recipe:', error);
   }
@@ -71,12 +75,12 @@ const submitRecipe = async () => {
 
 <template>
   <div class="flex flex-col h-screen">
-    <Header />
-    <div class="container flex-grow grid xl:grid-cols-3 xl:grid-rows-3 py-4 gap-4">
+    <Header/>
+    <div class="container flex-grow grid xl:grid-cols-6 xl:grid-rows-6 py-4 gap-4">
 
       <!-- Recipe Image and Ingredients Section -->
-      <div class="col-span-1 row-span-2 shadow rounded-lg bg-white p-4">
-<!-- Image Section -->
+      <div class="col-span-2 row-span-3 shadow rounded-lg bg-white p-4">
+        <!-- Image Section -->
         <div class="mt-auto">
           <label class="block text-lg text-primary font-bold mb-2" for="source">Image URL</label>
           <input
@@ -89,7 +93,7 @@ const submitRecipe = async () => {
         <!-- Ingredients Header -->
         <div class="flex items-center justify-between mb-4 text-sm">
           <h2 class="text-lg font-bold text-primary">Ingredients</h2>
-          <div class="flex items-center space-x-1 text-gray-600">
+          <div class="flex items-center space-x-1 text-gray-800">
             <span>For</span>
             <input
                 type="number"
@@ -105,15 +109,6 @@ const submitRecipe = async () => {
         <table class="w-full text-left text-sm mb-2">
           <tbody>
           <tr v-for="(ingredient, index) in newRecipe.ingredients" :key="index">
-            <td class="w-1/2 py-1 pr-1 text-gray-800">
-              <input
-                  type="text"
-                  v-model="ingredient.title"
-                  placeholder="Title"
-                  class="w-full px-2 shadow-sm border border-gray-300 rounded-full focus:outline-none focus:ring-primary focus:border-primary"
-                  aria-label="Ingredient Title"
-                  @keyup.enter="addIngredient"              />
-            </td>
             <td class="py-1 text-gray-800">
               <input
                   type="text"
@@ -125,26 +120,36 @@ const submitRecipe = async () => {
               />
             </td>
             <td class="py-1 pl-1 text-gray-800">
-              <input
-                  type="text"
+              <select
                   v-model="ingredient.unit"
-                  placeholder="Unit"
                   class="w-full px-2 shadow-sm border border-gray-300 rounded-full focus:outline-none focus:ring-primary focus:border-primary"
                   aria-label="Ingredient Unit"
-                  @keyup.enter="addIngredient"              />
+                  @keyup.enter="addIngredient">
+                <option v-for="unit in measurementUnits" :key="unit" :value="unit">{{ unit }}</option>
+              </select>
+            </td>
+            <td class="w-1/2 py-1 pr-1 text-gray-800">
+              <input
+                  type="text"
+                  v-model="ingredient.title"
+                  placeholder="Title"
+                  class="w-full px-2 shadow-sm border border-gray-300 rounded-full focus:outline-none focus:ring-primary focus:border-primary"
+                  aria-label="Ingredient Title"
+                  @keyup.enter="addIngredient"/>
             </td>
             <td class="py-1 pl-1 text-gray-800">
-              <button @click="removeIngredient(index)" class="text-red-500"><TrashIcon class="h-5 w-5"/></button>
+              <button @click="removeIngredient(index)" class="text-red-500">
+                <TrashIcon class="h-5 w-5"/>
+              </button>
             </td>
           </tr>
           </tbody>
         </table>
-
         <PrimaryButton @click="addIngredient" label="Add Ingredient">Add Ingredient</PrimaryButton>
       </div>
 
       <!-- Manual Section -->
-      <div class="flex flex-col col-span-2 row-span-3 shadow rounded-lg bg-white p-4">
+      <div class="flex flex-col col-span-4 row-span-6 shadow rounded-lg bg-white p-4">
         <!-- Tools -->
         <h2 class="text-lg text-primary font-bold">What You Need</h2>
         <ul class="ml-4 mt-2 mb-2">
@@ -198,50 +203,48 @@ const submitRecipe = async () => {
       </div>
 
       <!-- Nutritional Values Section -->
-      <div class="col-span-1 row-span-1 shadow rounded-lg bg-white p-4">
-        <h2 class="text-lg font-bold text-primary mb-3">Nutritional Values</h2>
-        <table class="w-full text-left">
-          <thead>
-          <tr>
-            <th class="text-black font-bold pb-1">Nutrient</th>
-            <th class="text-black font-bold pb-1">100g</th>
-            <th class="text-black font-bold pb-1">Portion (~750g)</th>
-          </tr>
-          </thead>
+      <div class="col-span-2 row-span-3 shadow rounded-lg bg-white p-4">
+        <h2 class="text-lg font-bold text-primary mb-4">Nutritional Values</h2>
+        <table class="w-full text-left text-sm mb-2">
           <tbody>
           <tr v-for="(value, index) in newRecipe.nutritionalValues" :key="index">
-            <td class="py-1 text-gray-800">
+            <td class="py-1 pr-1 text-gray-800">
               <input
                   type="text"
                   v-model="value.title"
                   placeholder="Nutrient"
-                  class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  class="w-full px-2 shadow-sm border border-gray-300 rounded-full focus:outline-none focus:ring-primary focus:border-primary"
                   aria-label="Nutritional Value Title"
-              />
+                  @keyup.enter="addNutritionalValue"/>
             </td>
             <td class="py-1 text-gray-800">
               <input
                   type="text"
                   v-model="value.amount"
                   placeholder="Amount per 100g"
-                  class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  class="w-full px-2 shadow-sm border border-gray-300 rounded-full focus:outline-none focus:ring-primary focus:border-primary"
                   aria-label="Amount per 100g"
+                  @keyup.enter="addNutritionalValue"
               />
             </td>
-            <td class="py-1 text-gray-800">
+            <td class="py-1 pl-1 text-gray-800">
               <input
                   type="text"
                   v-model="value.amountPerPortion"
                   placeholder="Amount per Portion"
-                  class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  class="w-full px-2 shadow-sm border border-gray-300 rounded-full focus:outline-none focus:ring-primary focus:border-primary"
                   aria-label="Amount per Portion"
-              />
+                  @keyup.enter="addNutritionalValue"/>
+            </td>
+            <td class="py-1 pl-1 text-gray-800">
+              <button @click="removeNutritionalValue(index)" class="text-red-500">
+                <TrashIcon class="h-5 w-5"/>
+              </button>
             </td>
           </tr>
           </tbody>
         </table>
-
-        <button @click="addNutritionalValue" class="mt-2 px-4 py-2 bg-green-500 text-white rounded">Add Nutritional Value</button>
+        <PrimaryButton @click="addNutritionalValue" label="Add Nutritional Value">Add Nutritional Value</PrimaryButton>
       </div>
     </div>
   </div>
