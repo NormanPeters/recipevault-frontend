@@ -18,7 +18,7 @@
       <!-- Buttons Section -->
       <div class="flex items-center space-x-4">
         <!-- Add Recipe Button -->
-        <PrimaryButton label="+ Add Recipe"/>
+        <PrimaryButton label="+ Add Recipe" @click="router.push('/create')"/>
         <!-- Filter Icon -->
         <button class="text-gray-500 hover:text-black">
           <AdjustmentsHorizontalIcon class="h-6 w-6"/>
@@ -30,7 +30,7 @@
   </header>
 
   <!-- Header Recipe -->
-  <header v-else class="w-full bg-white p-4 shadow z-10">
+  <header v-else-if="$route.path === '/recipe/[id]'" class="w-full bg-white p-4 shadow z-10">
     <div class="container bg-white flex items-center justify-between">
       <!-- Recipe Title -->
       <h1 class="text-3xl font-bold leading-tight">{{ $route.params.id ? recipeTitle : '' }}</h1>
@@ -39,6 +39,20 @@
       <div class="flex space-x-4">
         <PrimaryButton label="Edit"/>
         <NuxtLink to="/"><PrimaryButton label="Back"/></NuxtLink>
+      </div>
+    </div>
+  </header>
+
+  <!-- Header Create -->
+  <header v-else-if="$route.path === '/create'" class="w-full bg-white p-4 shadow z-10">
+    <div class="container bg-white flex items-center justify-between">
+      <!-- Recipe Title -->
+      <h1 class="text-3xl font-bold leading-tight">Create A New Recipe</h1>
+
+      <!-- Buttons Section -->
+      <div class="flex space-x-4">
+        <PrimaryButton label="Submit"/>
+        <NuxtLink to="/"><PrimaryButton label="Cancel"/></NuxtLink>
       </div>
     </div>
   </header>
