@@ -9,6 +9,8 @@ import {TrashIcon} from "@heroicons/vue/24/outline";
 
 const router = useRouter();
 const recipeStore = useRecipeStore();
+const nutritionalValuesTitles = ['Calories', 'Fat', ' - hereof: Sat. Fatty Acids', 'Protein', 'Carbohydrates', ' - hereof: Sugar'];
+
 
 const createNewRecipe = (): Recipe => ({
   imageUrl: '',
@@ -18,7 +20,11 @@ const createNewRecipe = (): Recipe => ({
   ingredients: [],
   tools: [],
   steps: [],
-  nutritionalValues: [],
+  nutritionalValues: nutritionalValuesTitles.map(title => ({
+    title,
+    amount: 0,
+    recipe: {} as Recipe
+  }))
 });
 
 const newRecipe = ref<Recipe>(createNewRecipe());
@@ -39,6 +45,19 @@ const removeIngredient = (index: number) => {
 
 const measurementUnits = ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
 
+// Nutritional Value Methods
+const addNutritionalValue = () => {
+  if (!newRecipe.value.nutritionalValues) {
+    newRecipe.value.nutritionalValues = [];
+  }
+  newRecipe.value.nutritionalValues.push({title: '', amount: 0, recipe: {} as Recipe});
+};
+
+onMounted(() => {
+  addNutritionalValue();
+});
+
+
 // Tool Methods
 const addTool = () => {
   if (!newRecipe.value.tools) {
@@ -53,14 +72,6 @@ const addStep = () => {
     newRecipe.value.steps = [];
   }
   newRecipe.value.steps.push({stepDescription: '', stepNumber: 0, recipe: {} as Recipe});
-};
-
-// Nutritional Value Methods
-const addNutritionalValue = () => {
-  if (!newRecipe.value.nutritionalValues) {
-    newRecipe.value.nutritionalValues = [];
-  }
-  newRecipe.value.nutritionalValues.push({title: '', amount: 0, recipe: {} as Recipe});
 };
 
 const submitRecipe = async () => {
@@ -206,45 +217,30 @@ const submitRecipe = async () => {
       <div class="col-span-2 row-span-3 shadow rounded-lg bg-white p-4">
         <h2 class="text-lg font-bold text-primary mb-4">Nutritional Values</h2>
         <table class="w-full text-left text-sm mb-2">
+          <thead>
+          <tr>
+            <th class="text-black font-bold pb-1"></th>
+            <th class="text-black font-bold pb-1">Amount per 100g</th>
+          </tr>
+          </thead>
           <tbody>
-          <tr v-for="(value, index) in newRecipe.nutritionalValues" :key="index">
+          <tr v-for="(title, index) in nutritionalValuesTitles" :key="index">
             <td class="py-1 pr-1 text-gray-800">
-              <input
-                  type="text"
-                  v-model="value.title"
-                  placeholder="Nutrient"
-                  class="w-full px-2 shadow-sm border border-gray-300 rounded-full focus:outline-none focus:ring-primary focus:border-primary"
-                  aria-label="Nutritional Value Title"
-                  @keyup.enter="addNutritionalValue"/>
+              <div class="w-full px-2 py-1">
+                {{ title }}
+              </div>
             </td>
             <td class="py-1 text-gray-800">
               <input
                   type="text"
-                  v-model="value.amount"
-                  placeholder="Amount per 100g"
+                  v-model="newRecipe.nutritionalValues[index].amount"
                   class="w-full px-2 shadow-sm border border-gray-300 rounded-full focus:outline-none focus:ring-primary focus:border-primary"
                   aria-label="Amount per 100g"
-                  @keyup.enter="addNutritionalValue"
               />
-            </td>
-            <td class="py-1 pl-1 text-gray-800">
-              <input
-                  type="text"
-                  v-model="value.amountPerPortion"
-                  placeholder="Amount per Portion"
-                  class="w-full px-2 shadow-sm border border-gray-300 rounded-full focus:outline-none focus:ring-primary focus:border-primary"
-                  aria-label="Amount per Portion"
-                  @keyup.enter="addNutritionalValue"/>
-            </td>
-            <td class="py-1 pl-1 text-gray-800">
-              <button @click="removeNutritionalValue(index)" class="text-red-500">
-                <TrashIcon class="h-5 w-5"/>
-              </button>
             </td>
           </tr>
           </tbody>
         </table>
-        <PrimaryButton @click="addNutritionalValue" label="Add Nutritional Value">Add Nutritional Value</PrimaryButton>
       </div>
     </div>
   </div>
