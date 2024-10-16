@@ -49,7 +49,7 @@
 
       <!-- Buttons Section -->
       <div class="flex space-x-4">
-        <PrimaryButton label="Add Recipe"/>
+        <PrimaryButton @click="submitRecipe" label="Add Recipe"/>
         <NuxtLink to="/"><PrimaryButton label="Cancel"/></NuxtLink>
       </div>
     </div>
@@ -66,9 +66,18 @@ const router = useRouter();
 const recipeStore = useRecipeStore();
 const recipeTitle = ref('');
 
+const props = defineProps({
+  submitRecipe: {
+    type: Function,
+    required: false,
+  },
+});
+
 watch(() => recipeStore.selectedRecipe, (newRecipe) => {
   if (newRecipe) {
     recipeTitle.value = newRecipe.title;
   }
 });
+
+
 </script>

@@ -97,7 +97,7 @@ const submitRecipe = async () => {
 
 <template>
   <div class="flex flex-col h-screen">
-    <Header/>
+    <Header :submitRecipe="submitRecipe"/>
     <div class="container flex-grow grid xl:grid-cols-6 xl:grid-rows-6 py-4 gap-4">
 
       <!-- Recipe Image and Ingredients Section -->
