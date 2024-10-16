@@ -33,7 +33,7 @@
   <header v-else-if="$route.path.match(/^\/recipe\/\d+$/)" class="w-full bg-white p-4 shadow z-10">
     <div class="container bg-white flex items-center justify-between">
       <!-- Recipe Title -->
-      <h1 class="text-3xl font-bold leading-tight">{{ $route.params.id ? recipeTitle : '' }}</h1>
+      <h1 class="text-3xl font-bold">{{ $route.params.id ? recipeTitle : '' }}</h1>
 
       <!-- Buttons Section -->
       <div class="flex space-x-4">
@@ -47,7 +47,7 @@
   <header v-else-if="$route.path === '/create'" class="w-full bg-white p-4 shadow z-10">
     <div class="container bg-white flex items-center justify-between">
       <!-- Recipe Title -->
-      <h1 class="text-3xl font-bold leading-tight">Create A New Recipe</h1>
+      <h1 class="text-3xl font-bold">Create A New Recipe</h1>
 
       <!-- Buttons Section -->
       <div class="flex space-x-4">

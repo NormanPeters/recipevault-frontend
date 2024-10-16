@@ -11,7 +11,7 @@
           <TextInput id="username" label="Username" v-model="username"/>
           <TextInput id="password" type="password" label="Password" v-model="password"/>
           <div class="flex items-center justify-between">
-            <PrimaryButton label="Login" type="submit"/>
+            <PrimaryButton label="Login" type="submit" class="border border-btnPrimary"/>
             <a class="inline-block align-baseline font-bold text-sm text-primary hover:text-primary-hover" href="">
               Forgot Password?
             </a>

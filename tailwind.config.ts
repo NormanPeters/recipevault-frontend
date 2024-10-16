@@ -16,12 +16,36 @@ module.exports = {
                 syncopate: ['Syncopate', 'sans-serif'],
                 montserrat: ['Montserrat', 'sans-serif'],
             },
+            fontSize: {
+                body: '12px',  // Default body font size
+            },
+            backgroundColor: {
+                body: 'whitesmoke',  // Default body background color
+            },
+            color: {
+                primary: '#3f3f46',  // Default font color
+            },
             colors: {
                 primary: {
-                    DEFAULT: '#80E102',  // Original color
-                    hover: '#A7F342',    // Lighter version for hover effect
+                    DEFAULT: '#326917',
                 },
+                btnPrimary: {
+                    DEFAULT: '#326917',
+                    hover: '#f45e45',
+                }
             },
         },
     },
+    plugins: [
+        function ({ addBase, theme }) {
+            addBase({
+                'body': {
+                    fontFamily: theme('fontFamily.montserrat'),
+                    fontSize: theme('fontSize.body'),
+                    backgroundColor: theme('backgroundColor.body'),
+                    color: theme('color.primary'),
+                },
+            });
+        }
+    ],
 };
