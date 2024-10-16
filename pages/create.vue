@@ -85,6 +85,7 @@ const removeStep = (index: number) => {
 };
 
 const submitRecipe = async () => {
+  console.log('Creating recipe:', newRecipe.value);
   try {
     await recipeStore.createRecipe(newRecipe.value);
     await router.push('/');
@@ -104,7 +105,7 @@ const submitRecipe = async () => {
 
         <!-- Ingredients Header -->
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-bold text-primary">Ingredients</h2>
+          <h2>Ingredients</h2>
           <div class="flex items-center space-x-1">
             <span>For</span>
             <TextInput
@@ -157,21 +158,21 @@ const submitRecipe = async () => {
 
         <!-- Title -->
         <div class="justify-start">
-          <h2 class="text-lg font-bold text-primary">Recipe Title</h2>
+          <h2>Recipe Title</h2>
           <TextInput
               type="text"
               v-model="newRecipe.title"
           />
 
           <!-- Description -->
-          <h2 class="mt-2 text-lg font-bold text-primary">Description</h2>
+          <h2 class="mt-2">Description</h2>
           <TextInput
               type="text"
               v-model="newRecipe.description"
           />
 
           <!-- Tools -->
-          <h2 class="mt-2 text-lg font-bold text-primary">Tools</h2>
+          <h2 class="mt-2">Tools</h2>
           <table>
             <tbody>
             <tr v-for="(tool, index) in newRecipe.tools" :key="index">
@@ -199,7 +200,7 @@ const submitRecipe = async () => {
           <PrimaryButton @click="addTool" label=" + Add Tool"/>
 
           <!-- Manual Steps -->
-          <h2 class="mt-2 text-lg font-bold text-primary">Manual</h2>
+          <h2 class="mt-2">Manual</h2>
           <table>
             <tbody>
             <tr v-for="(step, index) in newRecipe.steps" :key="index">
@@ -223,7 +224,7 @@ const submitRecipe = async () => {
 
         <!-- Image Section -->
         <div class="mt-auto">
-          <h2 class="text-lg font-bold text-primary">Image URL</h2>
+          <h2>Image URL</h2>
           <TextInput
               type="text"
               placeholder="https://www.example.com"
@@ -231,7 +232,7 @@ const submitRecipe = async () => {
           />
 
           <!-- Source URL -->
-          <h2 class="text-lg font-bold text-primary">Source</h2>
+          <h2>Source</h2>
           <TextInput
               type="text"
               placeholder="https://www.example.com"
@@ -242,7 +243,7 @@ const submitRecipe = async () => {
 
       <!-- Nutritional Values Section -->
       <div class="col-span-2 row-span-3 bg-white p-4 shadow rounded">
-        <h2 class="text-lg font-bold text-primary mb-2">Nutritional Values</h2>
+        <h2 class="mb-2">Nutritional Values</h2>
         <table class="w-full text-left">
           <thead>
           <tr class="font-bold text-black">

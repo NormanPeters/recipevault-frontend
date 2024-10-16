@@ -34,6 +34,11 @@ module.exports = {
                     hover: '#f45e45',
                 }
             },
+            h2: {
+                color: '#326917',
+                fontSize: '18px',
+                fontWeight: 'bold',
+            }
         },
     },
     plugins: [
@@ -44,6 +49,11 @@ module.exports = {
                     fontSize: theme('fontSize.body'),
                     backgroundColor: theme('backgroundColor.body'),
                     color: theme('color.primary'),
+                },
+                'h2': {
+                    color: theme('h2.color'),
+                    fontSize: theme('h2.fontSize'),
+                    fontWeight: theme('h2.fontWeight'),
                 },
             });
         }
