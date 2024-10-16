@@ -45,13 +45,11 @@
 
   <!-- Header Create -->
   <header v-else-if="$route.path === '/create'" class="w-full bg-white p-4 shadow z-10">
-    <div class="container bg-white flex items-center justify-between">
-      <!-- Recipe Title -->
-      <h1 class="text-3xl font-bold">Create A New Recipe</h1>
+    <div class="container bg-white flex items-center justify-end">
 
       <!-- Buttons Section -->
       <div class="flex space-x-4">
-        <PrimaryButton label="Submit"/>
+        <PrimaryButton label="Add Recipe"/>
         <NuxtLink to="/"><PrimaryButton label="Cancel"/></NuxtLink>
       </div>
     </div>
