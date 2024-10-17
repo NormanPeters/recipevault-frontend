@@ -35,7 +35,7 @@ module.exports = {
                 }
             },
             h2: {
-                color: '#326917',
+                color: '#3f3f46',
                 fontSize: '18px',
                 fontWeight: 'bold',
             }

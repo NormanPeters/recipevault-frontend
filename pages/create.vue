@@ -51,13 +51,6 @@ const addNutritionalValue = () => {
   newRecipe.value.nutritionalValues.push({title: '', amount: 0, recipe: {} as Recipe});
 };
 
-onMounted(() => {
-  addIngredient();
-  addNutritionalValue();
-  addTool();
-  addStep();
-});
-
 const addTool = () => {
   if (!newRecipe.value.tools) {
     newRecipe.value.tools = [];
@@ -93,6 +86,12 @@ const submitRecipe = async () => {
     console.error('Error creating recipe:', error);
   }
 };
+
+onMounted(() => {
+  addIngredient();
+  addTool();
+  addStep();
+});
 </script>
 
 <template>
@@ -109,6 +108,7 @@ const submitRecipe = async () => {
           <div class="flex items-center space-x-1">
             <span>For</span>
             <TextInput
+                class="w-14"
                 type="number"
                 v-model="newRecipe.servings"
             />
@@ -117,154 +117,106 @@ const submitRecipe = async () => {
         </div>
 
         <!-- Ingredients Table -->
-        <table>
-          <tbody>
-          <tr v-for="(ingredient, index) in newRecipe.ingredients" :key="index">
-            <td>
-              <TextInput
-                  type="text"
-                  v-model="ingredient.amount"
-                  placeholder="Amount"
-                  @keyup.enter="addIngredient"
-              />
-            </td>
-            <td>
-              <SelectField
-                  v-model="ingredient.unit"
-                  :options="measurementUnits.map(unit => ({ value: unit, text: unit }))"
-              />
-            </td>
-            <td class="w-3/6">
-              <TextInput
-                  type="text"
-                  v-model="ingredient.title"
-                  placeholder="Title"
-                  @keyup.enter="addIngredient"
-              />
-            </td>
-            <td class="">
-              <button @click="removeIngredient(index)" class="text-red-500">
-                <TrashIcon class="h-5 w-5"/>
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+        <div class="grid gap-1">
+          <div v-for="(ingredient, index) in newRecipe.ingredients" :key="index"
+               class="grid grid-cols-12 gap-1 items-center">
+            <TextInput
+                class="col-span-2"
+                type="text"
+                v-model="ingredient.amount"
+                placeholder="Amount"
+                @keyup.enter="addIngredient"
+            />
+            <SelectField
+                class="col-span-3"
+                v-model="ingredient.unit"
+                :options="measurementUnits.map(unit => ({ value: unit, text: unit }))"
+            />
+            <TextInput
+                class="col-span-6"
+                type="text"
+                v-model="ingredient.title"
+                placeholder="Title"
+                @keyup.enter="addIngredient"
+            />
+            <button @click="removeIngredient(index)" class="col-span-1 text-red-500">
+              <TrashIcon class="h-5 w-5"/>
+            </button>
+          </div>
+        </div>
         <PrimaryButton @click="addIngredient" label=" + Add Ingredient"/>
       </div>
 
-      <!-- Manual Section -->
-      <div class="flex flex-col col-span-4 row-span-6 bg-white p-4 shadow rounded">
 
+      <div class="flex flex-col col-span-4 row-span-6 bg-white p-4 shadow rounded">
         <!-- Title -->
         <div class="justify-start">
           <h2>Recipe Title</h2>
-          <TextInput
-              type="text"
-              v-model="newRecipe.title"
-          />
+          <TextInput type="text" v-model="newRecipe.title"/>
 
           <!-- Description -->
           <h2 class="mt-2">Description</h2>
-          <TextInput
-              type="text"
-              v-model="newRecipe.description"
-          />
+          <TextInput type="text" v-model="newRecipe.description"/>
 
           <!-- Tools -->
           <h2 class="mt-2">Tools</h2>
-          <table>
-            <tbody>
-            <tr v-for="(tool, index) in newRecipe.tools" :key="index">
-              <td class="w-1/12 py-1">
-                <TextInput
-                    type="text"
-                    v-model="tool.amount"
-                />
-              </td>
-              <td class="w-full">
-                <TextInput
-                    type="text"
-                    v-model="tool.title"
-                    placeholder="Tool Name"
-                />
-              </td>
-              <td>
-                <button @click="removeTool(index)" class="w-1/12 text-red-500">
-                  <TrashIcon class="h-5 w-5"/>
-                </button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+          <div class="grid gap-1">
+            <div v-for="(tool, index) in newRecipe.tools" :key="index" class="grid grid-cols-12 gap-1 items-center">
+              <TextInput class="col-span-1" type="text" v-model="tool.amount"/>
+              <TextInput class="col-span-10" type="text" v-model="tool.title" placeholder="Tool Name"/>
+              <button @click="removeTool(index)" class="col-span-1 text-red-500">
+                <TrashIcon class="h-5 w-5"/>
+              </button>
+            </div>
+          </div>
           <PrimaryButton @click="addTool" label=" + Add Tool"/>
 
           <!-- Manual Steps -->
           <h2 class="mt-2">Manual</h2>
-          <table>
-            <tbody>
-            <tr v-for="(step, index) in newRecipe.steps" :key="index">
-              <td class="w-full py-1">
-                <TextInput
-                    type="text"
-                    v-model="step.stepDescription"
-                    :placeholder="`${index + 1}. Step`"
-                />
-              </td>
-              <td>
-                <button @click="removeStep(index)" class="text-red-500">
-                  <TrashIcon class="h-5 w-5"/>
-                </button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+          <div class="grid gap-1">
+            <div v-for="(step, index) in newRecipe.steps" :key="index" class="grid grid-cols-12 gap-1 items-center">
+              <TextInput class="col-span-11" type="text" v-model="step.stepDescription"
+                         :placeholder="`${index + 1}. Step`"/>
+              <button @click="removeStep(index)" class="col-span-1 text-red-500">
+                <TrashIcon class="h-5 w-5"/>
+              </button>
+            </div>
+          </div>
           <PrimaryButton @click="addStep" label="+ Add Step"/>
         </div>
 
         <!-- Image Section -->
         <div class="mt-auto">
           <h2>Image URL</h2>
-          <TextInput
-              type="text"
-              placeholder="https://www.example.com"
-              v-model="newRecipe.imageUrl"
-          />
+          <TextInput type="text" placeholder="https://www.example.com" v-model="newRecipe.imageUrl"/>
 
           <!-- Source URL -->
           <h2>Source</h2>
-          <TextInput
-              type="text"
-              placeholder="https://www.example.com"
-              v-model="newRecipe.sourceUrl"
-          />
+          <TextInput type="text" placeholder="https://www.example.com" v-model="newRecipe.sourceUrl"/>
         </div>
       </div>
 
       <!-- Nutritional Values Section -->
-      <div class="col-span-2 row-span-3 bg-white p-4 shadow rounded">
+      <div class="col-span-2 row-span-3 bg-white p-4 shadow rounded text-left">
         <h2 class="mb-2">Nutritional Values</h2>
-        <table class="w-full text-left">
-          <thead>
-          <tr class="font-bold text-black">
-            <th class="py-1"></th>
-            <th class="py-1">Amount Per 100g</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="(title, index) in nutritionalValuesTitles" :key="index">
-            <td class="py-1">
-              {{ title }}
-            </td>
-            <td class="py-1">
+        <div class="grid grid-cols-2 font-bold text-black mb-1">
+          <div></div>
+          <div>Amount Per 100g</div>
+        </div>
+        <div>
+          <div v-for="(nutritionalValue, index) in newRecipe.nutritionalValues" :key="index"
+               class="grid grid-cols-2 mb-1">
+            <div>
+              {{ nutritionalValue.title }}
+            </div>
+            <div>
               <TextInput
                   type="text"
-                  v-model="newRecipe.nutritionalValues[index].amount"
+                  v-model="nutritionalValue.amount"
               />
-            </td>
-          </tr>
-          </tbody>
-        </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
