@@ -29,6 +29,10 @@ module.exports = {
                 primary: {
                     DEFAULT: '#326917',
                 },
+                attention: {
+                    DEFAULT: '#f45e45',
+                    hover: '#f9a29f',
+                },
                 btnPrimary: {
                     DEFAULT: '#326917',
                     hover: '#f45e45',

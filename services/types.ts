@@ -8,10 +8,14 @@ export interface User {
 export interface Recipe {
     recipeId?: number;
     user?: User;
-    imageUrl?: string;
     title?: string;
     description?: string;
+    imageUrl?: string;
     isFavourite?: boolean;
+    time?: string;
+    sourceUrl?: string;
+    servings?: number;
+    portionSize?: number;
     ingredients?: Ingredient[];
     nutritionalValues?: NutritionalValue[];
     steps?: RecipeStep[];
