@@ -1,21 +1,31 @@
-<script setup lang="ts">
-import {MagnifyingGlassIcon} from '@heroicons/vue/24/outline';
-</script>
-
 <!-- @/components/SearchBar.vue -->
 <template>
-  <div class="flex items-center bg-gray-100 rounded-full px-4 py-2 shadow-sm border focus-within:border-primary focus-within:shadow-outline">
+  <div class="flex items-center bg-gray-100 rounded-full px-2 py-1 shadow-sm border focus-within:border-primary focus-within:shadow-outline w-full max-w-xs">
     <input
-        type="text"
-        placeholder="Search for ingredients"
-        class="bg-transparent outline-none text-gray-600 placeholder-gray-400 w-full leading-tight px-3"
+        class="bg-transparent outline-none placeholder-gray-400 leading-tight px-3 w-full"
+        :type="type"
+        :placeholder="placeholder"
     />
-    <button class="text-gray-500 ml-2">
+    <button class="ml-2">
       <MagnifyingGlassIcon class="h-6 w-6"/>
     </button>
   </div>
 </template>
 
-<style scoped>
+<script setup lang="ts">
+import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline';
 
+defineProps({
+  type: {
+    type: [String, Number],
+    default: '',
+  },
+  placeholder: {
+    type: String,
+    default: '',
+  },
+});
+</script>
+
+<style scoped>
 </style>

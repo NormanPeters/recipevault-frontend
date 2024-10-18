@@ -4,24 +4,15 @@
   <header v-if="$route.path === '/'" class="sticky top-0 w-full h-16 bg-white p-4 shadow z-10 flex items-center">
     <div class="container flex justify-between">
       <!-- Search Bar -->
-      <div
-          class="flex items-center bg-gray-100 rounded-full px-4 py-2 shadow-sm border focus-within:border-primary focus-within:shadow-outline">
-        <input
-            type="text"
-            placeholder="Search for ingredients"
-            class="bg-transparent outline-none text-gray-600 placeholder-gray-400 w-full leading-tight px-3"
-        />
-        <button class="text-gray-500 ml-2">
-          <MagnifyingGlassIcon class="h-6 w-6"/>
-        </button>
-      </div>
+
+      <SearchBar placeholder="Search For Ingredients..."/>
 
       <!-- Buttons Section -->
       <div class="flex items-center space-x-4">
         <!-- Add Recipe Button -->
         <PrimaryButton label="+ Add Recipe" @click="router.push('/create')"/>
         <!-- Filter Icon -->
-        <button class="text-gray-500 hover:text-black">
+        <button class="text-btnPrimary hover:text-btnPrimary-hover">
           <AdjustmentsHorizontalIcon class="h-6 w-6"/>
         </button>
         <!-- Settings Icon -->
@@ -39,6 +30,7 @@
       <!-- Buttons Section -->
       <div class="flex space-x-4">
         <PrimaryButton label="Edit"/>
+        <PrimaryButton label="Delete"/>
         <NuxtLink to="/">
           <PrimaryButton label="Back"/>
         </NuxtLink>
@@ -77,6 +69,13 @@ const props = defineProps({
     required: false,
   },
 });
+
+const deleteRecipe = async () => {
+  if (recipeStore.selectedRecipe) {
+    await recipeStore.deleteRecipe(recipeStore.selectedRecipe.id);
+    await router.push('/');
+  }
+};
 
 watch(() => recipeStore.selectedRecipe, (newRecipe) => {
   if (newRecipe) {

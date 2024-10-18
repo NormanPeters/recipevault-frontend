@@ -19,7 +19,7 @@
             <span>For</span>
             <input
                 type="number"
-                value="1"
+                :value="recipe.servings"
                 class="w-10 text-center border border-gray-300 rounded focus:outline-none focus:border-btnPrimary"
             />
             <span>People</span>

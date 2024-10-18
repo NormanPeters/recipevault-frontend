@@ -49,6 +49,19 @@ export const useRecipeStore = defineStore('recipe', {
                 throw error;
             }
         },
+        async deleteRecipe(id: number) {
+            try {
+                const response = await api.deleteRecipe(id);
+                if (response) {
+                    this.recipes = this.recipes.filter((recipe) => recipe.id !== id);
+                } else {
+                    console.warn('Failed to delete recipe');
+                }
+            } catch (error) {
+                console.error('Error deleting recipe:', error);
+                throw error;
+            }
+        },
     },
     getters: {
         getRecipes: (state) => state.recipes,

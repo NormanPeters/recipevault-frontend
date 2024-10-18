@@ -4,7 +4,7 @@
     <!-- Settings Icon -->
     <button
         @click="toggleDropdown"
-        class="text-gray-500 hover:text-black focus:outline-none"
+        class="text-btnPrimary hover:text-btnPrimary-hover focus:outline-none"
         aria-haspopup="true"
         :aria-expanded="isOpen"
     >
