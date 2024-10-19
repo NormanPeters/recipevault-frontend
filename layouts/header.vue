@@ -30,7 +30,7 @@
       <!-- Buttons Section -->
       <div class="flex space-x-4">
         <PrimaryButton label="Edit"/>
-        <PrimaryButton label="Delete"/>
+        <PrimaryButton label="Delete" @click="deleteRecipe"/>
         <NuxtLink to="/">
           <PrimaryButton label="Back"/>
         </NuxtLink>
@@ -63,7 +63,7 @@ const router = useRouter();
 const recipeStore = useRecipeStore();
 const recipeTitle = ref('');
 
-const props = defineProps({
+defineProps({
   submitRecipe: {
     type: Function,
     required: false,
@@ -72,7 +72,7 @@ const props = defineProps({
 
 const deleteRecipe = async () => {
   if (recipeStore.selectedRecipe) {
-    await recipeStore.deleteRecipe(recipeStore.selectedRecipe.id);
+    await recipeStore.deleteRecipe(recipeStore.selectedRecipe.recipeId);
     await router.push('/');
   }
 };
