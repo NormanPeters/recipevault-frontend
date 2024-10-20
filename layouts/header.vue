@@ -30,7 +30,7 @@
       <!-- Buttons Section -->
       <div class="flex space-x-4">
         <PrimaryButton label="Edit"/>
-        <PrimaryButton label="Delete" @click="deleteRecipe"/>
+        <PrimaryButton label="Delete" @click="toggleModal"/>
         <NuxtLink to="/">
           <PrimaryButton label="Back"/>
         </NuxtLink>
@@ -38,13 +38,14 @@
     </div>
   </header>
 
+
   <!-- Header Create -->
   <header v-else-if="$route.path === '/create'" class="w-full h-16 bg-white p-4 shadow z-10">
     <div class="container bg-white flex items-center justify-end">
 
       <!-- Buttons Section -->
       <div class="flex space-x-4">
-        <PrimaryButton @click="submitRecipe" label="Add Recipe"/>
+        <PrimaryButton @click="submitRecipe" label="+ Submit"/>
         <NuxtLink to="/">
           <PrimaryButton label="Cancel"/>
         </NuxtLink>
@@ -55,7 +56,7 @@
 
 <script setup lang="ts">
 import {ref, watch} from 'vue';
-import {AdjustmentsHorizontalIcon, MagnifyingGlassIcon} from '@heroicons/vue/24/solid';
+import {AdjustmentsHorizontalIcon} from '@heroicons/vue/24/solid';
 import {useRecipeStore} from '~/stores/recipe';
 import {useRouter} from 'vue-router';
 
@@ -63,19 +64,7 @@ const router = useRouter();
 const recipeStore = useRecipeStore();
 const recipeTitle = ref('');
 
-defineProps({
-  submitRecipe: {
-    type: Function,
-    required: false,
-  },
-});
-
-const deleteRecipe = async () => {
-  if (recipeStore.selectedRecipe) {
-    await recipeStore.deleteRecipe(recipeStore.selectedRecipe.recipeId);
-    await router.push('/');
-  }
-};
+defineProps(['submitRecipe', 'toggleModal']);
 
 watch(() => recipeStore.selectedRecipe, (newRecipe) => {
   if (newRecipe) {

@@ -1,7 +1,7 @@
 <!-- @/pages/recipe/[id].vue -->
 <template>
   <div class="flex flex-col h-screen">
-    <Header/>
+    <Header :toggle-modal="toggleModal"/>
     <div v-if="recipe" class="container flex-grow grid xl:grid-cols-3 xl:grid-rows-3 py-4 gap-4">
       <!-- Recipe Image and Ingredients Section -->
       <div class="flex flex-col col-span-1 row-span-2 shadow rounded bg-white p-4">
@@ -80,24 +80,41 @@
     <div v-else class="flex items-center justify-center h-full text-lg text-gray-500">
       Loading recipe details...
     </div>
+
+    <!-- Modal for deleting a recipe -->
+    <ModalDelete :show="modalDelete" @close="toggleModal" @confirm-delete="deleteRecipe" />
   </div>
 </template>
 
 <script setup lang="ts">
-import {useRoute} from 'vue-router';
-import {onMounted, computed} from 'vue';
+import {onMounted, computed, ref} from 'vue';
 import {useRecipeStore} from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
 
-const recipeStore = useRecipeStore();
 const route = useRoute();
+const router = useRouter();
+const recipeStore = useRecipeStore();
 const recipeId = Number(route.params.id);
+const modalDelete = ref(false);
 
 onMounted(async () => {
   await recipeStore.fetchRecipeById(recipeId);
 });
 
 const recipe = computed(() => recipeStore.selectedRecipe);
+
+// delete recipe
+const toggleModal = () => {
+  modalDelete.value = !modalDelete.value;
+}
+const deleteRecipe = async () => {
+  const selectedRecipe = recipeStore.selectedRecipe;
+  if (selectedRecipe) {
+    await recipeStore.deleteRecipe(selectedRecipe.recipeId);
+    modalDelete.value = false;
+  }
+  await router.push('/');
+};
 
 // Calculate nutritional values per portion
 const portionSize = 750;

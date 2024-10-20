@@ -1,99 +1,3 @@
-<script setup lang="ts">
-import {ref, onMounted} from 'vue';
-import {useRouter} from 'vue-router';
-import {useRecipeStore} from '~/stores/recipe';
-import Header from '~/layouts/header.vue';
-import {Recipe} from '~/services/types';
-import {TrashIcon} from "@heroicons/vue/24/outline";
-import TextInput from '~/components/TextInput.vue';
-import SelectField from "~/components/SelectField.vue";
-
-const router = useRouter();
-const recipeStore = useRecipeStore();
-const nutritionalValuesTitles = ['Calories', 'Fat', ' - hereof: Sat. Fatty Acids', 'Protein', 'Carbohydrates', ' - hereof: Sugar'];
-
-const createNewRecipe = (): Recipe => ({
-  imageUrl: '',
-  title: '',
-  description: '',
-  isFavourite: false,
-  ingredients: [],
-  tools: [],
-  steps: [],
-  nutritionalValues: nutritionalValuesTitles.map(title => ({
-    title,
-    amount: 0,
-    recipe: {} as Recipe
-  }))
-});
-
-const newRecipe = ref<Recipe>(createNewRecipe());
-
-const addIngredient = () => {
-  if (!newRecipe.value.ingredients) {
-    newRecipe.value.ingredients = [];
-  }
-  newRecipe.value.ingredients.push({title: '', amount: 0, unit: 'g', recipe: {} as Recipe});
-};
-
-const removeIngredient = (index: number) => {
-  if (newRecipe.value.ingredients) {
-    newRecipe.value.ingredients.splice(index, 1);
-  }
-};
-
-const measurementUnits = ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
-
-const addNutritionalValue = () => {
-  if (!newRecipe.value.nutritionalValues) {
-    newRecipe.value.nutritionalValues = [];
-  }
-  newRecipe.value.nutritionalValues.push({title: '', amount: 0, recipe: {} as Recipe});
-};
-
-const addTool = () => {
-  if (!newRecipe.value.tools) {
-    newRecipe.value.tools = [];
-  }
-  newRecipe.value.tools.push({title: '', amount: 0, recipe: {} as Recipe});
-};
-
-const removeTool = (index: number) => {
-  if (newRecipe.value.tools) {
-    newRecipe.value.tools.splice(index, 1);
-  }
-};
-
-const addStep = () => {
-  if (!newRecipe.value.steps) {
-    newRecipe.value.steps = [];
-  }
-  newRecipe.value.steps.push({stepDescription: '', stepNumber: 0, recipe: {} as Recipe});
-};
-
-const removeStep = (index: number) => {
-  if (newRecipe.value.steps) {
-    newRecipe.value.steps.splice(index, 1);
-  }
-};
-
-const submitRecipe = async () => {
-  console.log('Creating recipe:', newRecipe.value);
-  try {
-    await recipeStore.createRecipe(newRecipe.value);
-    await router.push('/');
-  } catch (error) {
-    console.error('Error creating recipe:', error);
-  }
-};
-
-onMounted(() => {
-  addIngredient();
-  addTool();
-  addStep();
-});
-</script>
-
 <template>
   <div class="flex flex-col h-screen">
     <Header :submitRecipe="submitRecipe"/>
@@ -221,6 +125,104 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import {ref, onMounted} from 'vue';
+import {useRouter} from 'vue-router';
+import {useRecipeStore} from '~/stores/recipe';
+import Header from '~/layouts/header.vue';
+import {Recipe} from '~/services/types';
+import {TrashIcon} from "@heroicons/vue/24/outline";
+import TextInput from '~/components/TextInput.vue';
+import SelectField from "~/components/SelectField.vue";
+
+const router = useRouter();
+const recipeStore = useRecipeStore();
+const nutritionalValuesTitles = ['Calories', 'Fat', ' - hereof: Sat. Fatty Acids', 'Protein', 'Carbohydrates', ' - hereof: Sugar'];
+
+const createNewRecipe = (): Recipe => ({
+  imageUrl: '',
+  title: '',
+  description: '',
+  isFavourite: false,
+  ingredients: [],
+  tools: [],
+  steps: [],
+  nutritionalValues: nutritionalValuesTitles.map(title => ({
+    title,
+    amount: 0,
+    recipe: {} as Recipe
+  }))
+});
+
+const newRecipe = ref<Recipe>(createNewRecipe());
+
+const addIngredient = () => {
+  if (!newRecipe.value.ingredients) {
+    newRecipe.value.ingredients = [];
+  }
+  newRecipe.value.ingredients.push({title: '', amount: 0, unit: 'g', recipe: {} as Recipe});
+};
+
+const removeIngredient = (index: number) => {
+  if (newRecipe.value.ingredients) {
+    newRecipe.value.ingredients.splice(index, 1);
+  }
+};
+
+const measurementUnits = ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
+
+const addNutritionalValue = () => {
+  if (!newRecipe.value.nutritionalValues) {
+    newRecipe.value.nutritionalValues = [];
+  }
+  newRecipe.value.nutritionalValues.push({title: '', amount: 0, recipe: {} as Recipe});
+};
+
+const addTool = () => {
+  if (!newRecipe.value.tools) {
+    newRecipe.value.tools = [];
+  }
+  newRecipe.value.tools.push({title: '', amount: 0, recipe: {} as Recipe});
+};
+
+const removeTool = (index: number) => {
+  if (newRecipe.value.tools) {
+    newRecipe.value.tools.splice(index, 1);
+  }
+};
+
+const addStep = () => {
+  if (!newRecipe.value.steps) {
+    newRecipe.value.steps = [];
+  }
+  newRecipe.value.steps.push({stepDescription: '', stepNumber: 0, recipe: {} as Recipe});
+};
+
+const removeStep = (index: number) => {
+  if (newRecipe.value.steps) {
+    newRecipe.value.steps.splice(index, 1);
+  }
+};
+
+const submitRecipe = async () => {
+  console.log('Creating recipe:', newRecipe.value);
+  try {
+    await recipeStore.createRecipe(newRecipe.value);
+    await router.push('/');
+  } catch (error) {
+    console.error('Error creating recipe:', error);
+  }
+};
+
+onMounted(() => {
+  addIngredient();
+  addTool();
+  addStep();
+});
+</script>
+
+
 
 <style scoped>
 </style>
