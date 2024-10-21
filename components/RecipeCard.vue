@@ -3,7 +3,7 @@
             class="block max-w-full max-h-96 rounded shadow bg-white p-4 overflow-hidden hover:shadow-lg transition-shadow duration-300">
     <!-- Image Section -->
     <div class="relative">
-      <img
+      <NuxtImg
           :src="recipe?.imageUrl && recipe.imageUrl !== '' ? recipe.imageUrl : '/images/placeholder-recipe.jpg'"
           class="w-full h-44 object-cover rounded"
           alt="Dish Image"
@@ -34,9 +34,9 @@
 </template>
 
 <script setup lang="ts">
-import { HeartIcon } from "@heroicons/vue/24/outline/index.js";
-import { computed } from 'vue';
-import type { Recipe } from "@/services/types";
+import {HeartIcon} from "@heroicons/vue/24/outline/index.js";
+import {computed} from 'vue';
+import type {Recipe} from "@/services/types";
 
 const props = defineProps<{ recipe: Recipe }>();
 

@@ -25,11 +25,13 @@
   <header v-else-if="$route.path.match(/^\/recipe\/\d+$/)" class="w-full h-16 bg-white p-4 shadow z-10">
     <div class="container bg-white flex items-center justify-between">
       <!-- Recipe Title -->
-      <h1 class="text-3xl font-bold">{{ $route.params.id ? recipeTitle : '' }}</h1>
+      <h1 class="text-2xl font-bold">{{ $route.params.id ? recipeTitle : '' }}</h1>
 
       <!-- Buttons Section -->
       <div class="flex space-x-4">
-        <PrimaryButton label="Edit"/>
+        <NuxtLink :to="{ name: 'edit-id', params: {id: recipeId}}">
+          <PrimaryButton label="Edit"/>
+        </NuxtLink>
         <PrimaryButton label="Delete" @click="toggleModal"/>
         <NuxtLink to="/">
           <PrimaryButton label="Back"/>
@@ -38,6 +40,19 @@
     </div>
   </header>
 
+  <!-- Header Edit -->
+  <header v-else-if="$route.path.match(/^\/edit\/\d+$/)" class="w-full h-16 bg-white p-4 shadow z-10">
+    <div class="container bg-white flex items-center justify-end">
+
+      <!-- Buttons Section -->
+      <div class="flex space-x-4">
+        <PrimaryButton @click="saveRecipe" label="Save"/>
+        <NuxtLink :to="{ name: 'recipe-id', params: { id: recipeId }}">
+          <PrimaryButton label="Cancel"/>
+        </NuxtLink>
+      </div>
+    </div>
+  </header>
 
   <!-- Header Create -->
   <header v-else-if="$route.path === '/create'" class="w-full h-16 bg-white p-4 shadow z-10">
@@ -52,6 +67,7 @@
       </div>
     </div>
   </header>
+
 </template>
 
 <script setup lang="ts">
@@ -63,8 +79,9 @@ import {useRouter} from 'vue-router';
 const router = useRouter();
 const recipeStore = useRecipeStore();
 const recipeTitle = ref('');
+const recipeId = Number(router.currentRoute.value.params.id);
 
-defineProps(['submitRecipe', 'toggleModal']);
+defineProps(['submitRecipe', 'saveRecipe', 'toggleModal']);
 
 watch(() => recipeStore.selectedRecipe, (newRecipe) => {
   if (newRecipe) {

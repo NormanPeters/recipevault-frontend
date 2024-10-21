@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, computed, ref} from 'vue';
+import {computed, ref} from 'vue';
 import {useRecipeStore} from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
 
@@ -99,6 +99,10 @@ const modalDelete = ref(false);
 
 onMounted(async () => {
   await recipeStore.fetchRecipeById(recipeId);
+});
+
+onUnmounted(() => {
+  recipeStore.clearSelectedRecipe();
 });
 
 const recipe = computed(() => recipeStore.selectedRecipe);

@@ -1,7 +1,7 @@
 // stores/recipe.ts
-import { defineStore } from 'pinia';
-import { api } from '~/services/api';
-import { Recipe } from '~/services/types';
+import {defineStore} from 'pinia';
+import {api} from '~/services/api';
+import {Recipe} from '~/services/types';
 
 export const useRecipeStore = defineStore('recipe', {
     state: () => ({
@@ -62,6 +62,25 @@ export const useRecipeStore = defineStore('recipe', {
                 throw error;
             }
         },
+        async updateRecipe(id: number, updatedRecipe: Recipe) {
+            try {
+                const response = await api.updateRecipe(id, updatedRecipe);
+                if (response) {
+                    const index = this.recipes.findIndex(recipe => recipe.id === id);
+                    if (index !== -1) {
+                        this.recipes[index] = updatedRecipe;
+                    }
+                } else {
+                    console.warn('Failed to update recipe');
+                }
+            } catch (error) {
+                console.error('Error updating recipe:', error);
+                throw error;
+            }
+        },
+        clearSelectedRecipe() {
+            this.selectedRecipe = null;
+        }
     },
     getters: {
         getRecipes: (state) => state.recipes,

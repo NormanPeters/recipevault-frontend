@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-screen">
-    <Header :submitRecipe="submitRecipe"/>
+    <Header :save-recipe="saveRecipe"/>
     <div class="container flex-grow grid xl:grid-cols-6 xl:grid-rows-6 py-4 gap-4">
 
       <!-- Recipe Image and Ingredients Section -->
@@ -10,8 +10,8 @@
         <div class="grid grid-cols-2 mb-4">
           <h2>Cooking Time</h2>
           <TextInput type="text"
-                     v-model="newRecipe.time"
-                     />
+                     v-model="recipe.time"
+          />
         </div>
         <!-- Ingredients Header -->
         <div class="flex items-center justify-between mb-4">
@@ -21,7 +21,7 @@
             <TextInput
                 class="w-16"
                 type="number"
-                v-model="newRecipe.servings"
+                v-model="recipe.servings"
             />
             <span>People</span>
           </div>
@@ -29,7 +29,7 @@
 
         <!-- Ingredients Table -->
         <div class="grid gap-1">
-          <div v-for="(ingredient, index) in newRecipe.ingredients" :key="index"
+          <div v-for="(ingredient, index) in recipe.ingredients" :key="index"
                class="grid grid-cols-12 gap-1 items-center">
             <TextInput
                 class="col-span-2"
@@ -63,16 +63,16 @@
         <!-- Title -->
         <div class="justify-start">
           <h2>Recipe Title</h2>
-          <TextInput type="text" v-model="newRecipe.title" placeholder="Recipe Title"/>
+          <TextInput type="text" v-model="recipe.title" placeholder="Recipe Title"/>
 
           <!-- Description -->
           <h2 class="mt-2">Description</h2>
-          <TextInput type="text" v-model="newRecipe.description" placeholder="Recipe Description"/>
+          <TextInput type="text" v-model="recipe.description" placeholder="Recipe Description"/>
 
           <!-- Tools -->
           <h2 class="mt-2">Tools</h2>
           <div class="grid gap-1">
-            <div v-for="(tool, index) in newRecipe.tools" :key="index" class="grid grid-cols-12 gap-1 items-center">
+            <div v-for="(tool, index) in recipe.tools" :key="index" class="grid grid-cols-12 gap-1 items-center">
               <TextInput class="col-span-1" type="text" v-model="tool.amount"/>
               <TextInput class="col-span-10" type="text" v-model="tool.title" placeholder="Tool Name"/>
               <button @click="removeTool(index)" class="col-span-1 text-red-500">
@@ -85,7 +85,7 @@
           <!-- Manual Steps -->
           <h2 class="mt-2">Manual</h2>
           <div class="grid gap-1">
-            <div v-for="(step, index) in newRecipe.steps" :key="index" class="grid grid-cols-12 gap-1 items-center">
+            <div v-for="(step, index) in recipe.steps" :key="index" class="grid grid-cols-12 gap-1 items-center">
               <TextInput class="col-span-11" type="text" v-model="step.stepDescription"
                          :placeholder="`${index + 1}. Step`"/>
               <button @click="removeStep(index)" class="col-span-1 text-red-500">
@@ -99,11 +99,11 @@
         <!-- Image Section -->
         <div class="mt-auto">
           <h2>Image URL</h2>
-          <TextInput type="text" placeholder="https://www.example.com" v-model="newRecipe.imageUrl"/>
+          <TextInput type="text" placeholder="https://www.example.com" v-model="recipe.imageUrl"/>
 
           <!-- Source URL -->
           <h2 class="mt-2">Source</h2>
-          <TextInput type="text" placeholder="https://www.example.com" v-model="newRecipe.sourceUrl"/>
+          <TextInput type="text" placeholder="https://www.example.com" v-model="recipe.sourceUrl"/>
         </div>
       </div>
 
@@ -114,7 +114,7 @@
           <div>
             <TextInput
                 type="number"
-                v-model="newRecipe.portionSize"
+                v-model="recipe.portionSize"
                 placeholder="Portion Size in grams"
             />
           </div>
@@ -124,7 +124,7 @@
           <div>Amount Per 100g</div>
         </div>
         <div>
-          <div v-for="(nutritionalValue, index) in newRecipe.nutritionalValues" :key="index"
+          <div v-for="(nutritionalValue, index) in recipe.nutritionalValues" :key="index"
                class="grid grid-cols-2 mb-1 gap-1">
             <div>
               <TextInput type="text" v-model="nutritionalValue.title"/>
@@ -148,7 +148,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted} from 'vue';
+import {ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {useRecipeStore} from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
@@ -158,101 +158,81 @@ import TextInput from '~/components/TextInput.vue';
 import SelectField from "~/components/SelectField.vue";
 
 const router = useRouter();
+const route = useRoute();
 const recipeStore = useRecipeStore();
-const nutritionalValuesTitles = ['Calories', 'Fat', ' - hereof: Sat. Fatty Acids', 'Protein', 'Carbohydrates', ' - hereof: Sugar'];
+const recipeId = Number(route.params.id);
+const recipe = ref<Recipe>(recipeStore.selectedRecipe);
 
-const createNewRecipe = (): Recipe => ({
-  title: '',
-  description: '',
-  imageUrl: '',
-  isFavourite: false,
-  time: '30 - 40 min',
-  sourceUrl: '',
-  portionSize: '',
-  servings: 1,
-  ingredients: [],
-  tools: [],
-  steps: [],
-  nutritionalValues: nutritionalValuesTitles.map(title => ({
-    title,
-    amount: 0,
-    recipe: {} as Recipe
-  }))
+onMounted(async () => {
+  await recipeStore.fetchRecipeById(recipeId);
+
+});
+onUnmounted(() => {
+  recipeStore.clearSelectedRecipe();
+
 });
 
-const newRecipe = ref<Recipe>(createNewRecipe());
-
 const addIngredient = () => {
-  if (!newRecipe.value.ingredients) {
-    newRecipe.value.ingredients = [];
+  if (!recipe.value.ingredients) {
+    recipe.value.ingredients = [];
   }
-  newRecipe.value.ingredients.push({title: '', amount: 0, unit: 'g', recipe: {} as Recipe});
+  recipe.value.ingredients.push({title: '', amount: 0, unit: 'g', recipe: {} as Recipe});
 };
 
 const removeIngredient = (index: number) => {
-  if (newRecipe.value.ingredients) {
-    newRecipe.value.ingredients.splice(index, 1);
+  if (recipe.value.ingredients) {
+    recipe.value.ingredients.splice(index, 1);
   }
 };
 
 const measurementUnits = ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
 
 const addNutritionalValue = () => {
-  if (!newRecipe.value.nutritionalValues) {
-    newRecipe.value.nutritionalValues = [];
+  if (!recipe.value.nutritionalValues) {
+    recipe.value.nutritionalValues = [];
   }
-  newRecipe.value.nutritionalValues.push({title: '', amount: 0, recipe: {} as Recipe});
+  recipe.value.nutritionalValues.push({title: '', amount: 0, recipe: {} as Recipe});
 };
 
 const removeNutritionalValue = (index: number) => {
-  if (newRecipe.value.nutritionalValues) {
-    newRecipe.value.nutritionalValues.splice(index, 1);
+  if (recipe.value.nutritionalValues) {
+    recipe.value.nutritionalValues.splice(index, 1);
   }
 };
 
 const addTool = () => {
-  if (!newRecipe.value.tools) {
-    newRecipe.value.tools = [];
+  if (!recipe.value.tools) {
+    recipe.value.tools = [];
   }
-  newRecipe.value.tools.push({title: '', amount: 0, recipe: {} as Recipe});
+  recipe.value.tools.push({title: '', amount: 0, recipe: {} as Recipe});
 };
 
 const removeTool = (index: number) => {
-  if (newRecipe.value.tools) {
-    newRecipe.value.tools.splice(index, 1);
+  if (recipe.value.tools) {
+    recipe.value.tools.splice(index, 1);
   }
 };
 
 const addStep = () => {
-  if (!newRecipe.value.steps) {
-    newRecipe.value.steps = [];
+  if (!recipe.value.steps) {
+    recipe.value.steps = [];
   }
-  newRecipe.value.steps.push({stepDescription: '', stepNumber: 0, recipe: {} as Recipe});
+  recipe.value.steps.push({stepDescription: '', stepNumber: 0, recipe: {} as Recipe});
 };
 
 const removeStep = (index: number) => {
-  if (newRecipe.value.steps) {
-    newRecipe.value.steps.splice(index, 1);
+  if (recipe.value.steps) {
+    recipe.value.steps.splice(index, 1);
   }
 };
 
-const submitRecipe = async () => {
-  console.log('Creating recipe:', newRecipe.value);
+const saveRecipe = async () => {
+  console.log('Updating recipe:', recipe.value);
   try {
-    await recipeStore.createRecipe(newRecipe.value);
+    await recipeStore.updateRecipe(recipeId, recipe.value);
     await router.push('/');
   } catch (error) {
-    console.error('Error creating recipe:', error);
+    console.error('Error updating recipe:', error);
   }
 };
-
-onMounted(() => {
-  addIngredient();
-  addTool();
-  addStep();
-});
 </script>
-
-
-<style scoped>
-</style>

@@ -1,7 +1,7 @@
 <!-- @/layouts/login.vue -->
 <template>
   <div>
-    <NuxtPage />
+    <slot />
     <DialogWrapper />
   </div>
 </template>
