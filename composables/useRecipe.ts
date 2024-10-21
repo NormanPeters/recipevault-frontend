@@ -1,9 +1,8 @@
 // composables/useRecipe.ts
-import { ref } from 'vue';
-import { Recipe } from '~/services/types';
+import {Recipe} from '~/services/types';
 
 export function useRecipe() {
-    const measurementUnits = ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
+    const measurementUnits = ['', 'g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
 
     const addIngredient = (recipe: Recipe) => {
         if (!recipe.ingredients) {

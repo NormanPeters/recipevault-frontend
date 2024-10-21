@@ -1,93 +1,30 @@
 <!-- @/layouts/header.vue -->
 <template>
-  <!-- Header Index -->
-  <header v-if="$route.path === '/'" class="sticky top-0 w-full h-16 bg-white p-4 shadow z-10 flex items-center">
-    <div class="container flex justify-between">
-      <!-- Search Bar -->
-
-      <SearchBar placeholder="Search For Ingredients..."/>
-
-      <!-- Buttons Section -->
-      <div class="flex items-center space-x-4">
-        <!-- Add Recipe Button -->
-        <PrimaryButton label="+ Add Recipe" @click="router.push('/create')"/>
-        <!-- Filter Icon -->
-        <button class="text-btnPrimary hover:text-btnPrimary-hover">
-          <AdjustmentsHorizontalIcon class="h-6 w-6"/>
-        </button>
-        <!-- Settings Icon -->
-        <SettingsDropdown/>
-      </div>
-    </div>
-  </header>
-
-  <!-- Header Recipe -->
-  <header v-else-if="$route.path.match(/^\/recipe\/\d+$/)" class="w-full h-16 bg-white p-4 shadow z-10">
-    <div class="container bg-white flex items-center justify-between">
-      <!-- Recipe Title -->
-      <h1 class="text-2xl font-bold">{{ $route.params.id ? recipeTitle : '' }}</h1>
-
-      <!-- Buttons Section -->
-      <div class="flex space-x-4">
-        <NuxtLink :to="{ name: 'edit-id', params: {id: recipeId}}">
-          <PrimaryButton label="Edit"/>
-        </NuxtLink>
-        <PrimaryButton label="Delete" @click="toggleModal"/>
-        <NuxtLink to="/">
-          <PrimaryButton label="Back"/>
-        </NuxtLink>
-      </div>
-    </div>
-  </header>
-
-  <!-- Header Edit -->
-  <header v-else-if="$route.path.match(/^\/edit\/\d+$/)" class="w-full h-16 bg-white p-4 shadow z-10">
-    <div class="container bg-white flex items-center justify-end">
-
-      <!-- Buttons Section -->
-      <div class="flex space-x-4">
-        <PrimaryButton @click="saveRecipe" label="Save"/>
-        <NuxtLink :to="{ name: 'recipe-id', params: { id: recipeId }}">
-          <PrimaryButton label="Cancel"/>
-        </NuxtLink>
-      </div>
-    </div>
-  </header>
-
-  <!-- Header Create -->
-  <header v-else-if="$route.path === '/create'" class="w-full h-16 bg-white p-4 shadow z-10">
-    <div class="container bg-white flex items-center justify-end">
-
-      <!-- Buttons Section -->
-      <div class="flex space-x-4">
-        <PrimaryButton @click="submitRecipe" label="+ Submit"/>
-        <NuxtLink to="/">
-          <PrimaryButton label="Cancel"/>
-        </NuxtLink>
-      </div>
-    </div>
-  </header>
-
+  <component :is="currentHeader" :submitRecipe="submitRecipe" :saveRecipe="saveRecipe" :toggleModal="toggleModal"/>
 </template>
 
 <script setup lang="ts">
-import {ref, watch} from 'vue';
-import {AdjustmentsHorizontalIcon} from '@heroicons/vue/24/solid';
-import {useRecipeStore} from '~/stores/recipe';
-import {useRouter} from 'vue-router';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import HeaderIndex from '@/components/headers/HeaderIndex.vue';
+import HeaderRecipe from '@/components/headers/HeaderRecipe.vue';
+import HeaderEdit from '@/components/headers/HeaderEdit.vue';
+import HeaderCreate from '@/components/headers/HeaderCreate.vue';
 
-const router = useRouter();
-const recipeStore = useRecipeStore();
-const recipeTitle = ref('');
-const recipeId = Number(router.currentRoute.value.params.id);
+const route = useRoute();
 
-defineProps(['submitRecipe', 'saveRecipe', 'toggleModal']);
-
-watch(() => recipeStore.selectedRecipe, (newRecipe) => {
-  if (newRecipe) {
-    recipeTitle.value = newRecipe.title;
+const currentHeader = computed(() => {
+  if (route.path === '/') {
+    return HeaderIndex;
+  } else if (route.path.match(/^\/recipe\/\d+$/)) {
+    return HeaderRecipe;
+  } else if (route.path.match(/^\/edit\/\d+$/)) {
+    return HeaderEdit;
+  } else if (route.path === '/create') {
+    return HeaderCreate;
   }
+  return null;
 });
 
-
+defineProps(['submitRecipe', 'saveRecipe', 'toggleModal']);
 </script>

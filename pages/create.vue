@@ -156,6 +156,7 @@ import { Recipe } from '~/services/types';
 import { useRecipe } from '~/composables/useRecipe';
 import TextInput from '~/components/TextInput.vue';
 import SelectField from '~/components/SelectField.vue';
+import { TrashIcon } from '@heroicons/vue/24/outline';
 
 const router = useRouter();
 const recipeStore = useRecipeStore();
