@@ -148,14 +148,15 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
-import {useRouter} from 'vue-router';
-import {useRecipeStore} from '~/stores/recipe';
+import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useRecipeStore } from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
-import {Recipe} from '~/services/types';
-import {TrashIcon} from "@heroicons/vue/24/outline";
+import { Recipe } from '~/services/types';
+import { TrashIcon } from "@heroicons/vue/24/outline";
 import TextInput from '~/components/TextInput.vue';
 import SelectField from "~/components/SelectField.vue";
+import { useRecipe } from '~/composables/useRecipe';
 
 const router = useRouter();
 const route = useRoute();
@@ -163,68 +164,24 @@ const recipeStore = useRecipeStore();
 const recipeId = Number(route.params.id);
 const recipe = ref<Recipe>(recipeStore.selectedRecipe);
 
+const {
+  measurementUnits,
+  addIngredient,
+  removeIngredient,
+  addNutritionalValue,
+  removeNutritionalValue,
+  addTool,
+  removeTool,
+  addStep,
+  removeStep
+} = useRecipe();
+
 onMounted(async () => {
   await recipeStore.fetchRecipeById(recipeId);
-
 });
 onUnmounted(() => {
   recipeStore.clearSelectedRecipe();
-
 });
-
-const addIngredient = () => {
-  if (!recipe.value.ingredients) {
-    recipe.value.ingredients = [];
-  }
-  recipe.value.ingredients.push({title: '', amount: 0, unit: 'g', recipe: {} as Recipe});
-};
-
-const removeIngredient = (index: number) => {
-  if (recipe.value.ingredients) {
-    recipe.value.ingredients.splice(index, 1);
-  }
-};
-
-const measurementUnits = ['', 'g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
-
-const addNutritionalValue = () => {
-  if (!recipe.value.nutritionalValues) {
-    recipe.value.nutritionalValues = [];
-  }
-  recipe.value.nutritionalValues.push({title: '', amount: 0, recipe: {} as Recipe});
-};
-
-const removeNutritionalValue = (index: number) => {
-  if (recipe.value.nutritionalValues) {
-    recipe.value.nutritionalValues.splice(index, 1);
-  }
-};
-
-const addTool = () => {
-  if (!recipe.value.tools) {
-    recipe.value.tools = [];
-  }
-  recipe.value.tools.push({title: '', amount: 0, recipe: {} as Recipe});
-};
-
-const removeTool = (index: number) => {
-  if (recipe.value.tools) {
-    recipe.value.tools.splice(index, 1);
-  }
-};
-
-const addStep = () => {
-  if (!recipe.value.steps) {
-    recipe.value.steps = [];
-  }
-  recipe.value.steps.push({stepDescription: '', stepNumber: 0, recipe: {} as Recipe});
-};
-
-const removeStep = (index: number) => {
-  if (recipe.value.steps) {
-    recipe.value.steps.splice(index, 1);
-  }
-};
 
 const saveRecipe = async () => {
   console.log('Updating recipe:', recipe.value);
