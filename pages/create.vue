@@ -6,13 +6,20 @@
       <!-- Recipe Image and Ingredients Section -->
       <div class="col-span-2 row-span-3 bg-white p-4 shadow rounded">
 
+        <!-- Time -->
+        <div class="grid grid-cols-2 mb-4">
+          <h2>Cooking Time</h2>
+          <TextInput type="text"
+                     v-model="newRecipe.time"
+                      placeholder="30 - 40 min"/>
+        </div>
         <!-- Ingredients Header -->
         <div class="flex items-center justify-between mb-4">
           <h2>Ingredients</h2>
           <div class="flex items-center space-x-1">
             <span>For</span>
             <TextInput
-                class="w-14"
+                class="w-16"
                 type="number"
                 v-model="newRecipe.servings"
             />
@@ -95,14 +102,23 @@
           <TextInput type="text" placeholder="https://www.example.com" v-model="newRecipe.imageUrl"/>
 
           <!-- Source URL -->
-          <h2>Source</h2>
+          <h2 class="mt-2">Source</h2>
           <TextInput type="text" placeholder="https://www.example.com" v-model="newRecipe.sourceUrl"/>
         </div>
       </div>
 
       <!-- Nutritional Values Section -->
       <div class="col-span-2 row-span-3 bg-white p-4 shadow rounded text-left">
-        <h2 class="mb-2">Nutritional Values</h2>
+        <div class="grid grid-cols-2 mb-4">
+          <h2>Nutritional Values</h2>
+          <div>
+            <TextInput
+                type="number"
+                v-model="newRecipe.portionSize"
+                placeholder="Portion Size in grams"
+            />
+          </div>
+        </div>
         <div class="grid grid-cols-2 font-bold text-black mb-1">
           <div></div>
           <div>Amount Per 100g</div>
@@ -141,10 +157,14 @@ const recipeStore = useRecipeStore();
 const nutritionalValuesTitles = ['Calories', 'Fat', ' - hereof: Sat. Fatty Acids', 'Protein', 'Carbohydrates', ' - hereof: Sugar'];
 
 const createNewRecipe = (): Recipe => ({
-  imageUrl: '',
   title: '',
   description: '',
+  imageUrl: '',
   isFavourite: false,
+  time: '',
+  sourceUrl: '',
+  portionSize: '',
+  servings: 1,
   ingredients: [],
   tools: [],
   steps: [],
@@ -221,7 +241,6 @@ onMounted(() => {
   addStep();
 });
 </script>
-
 
 
 <style scoped>

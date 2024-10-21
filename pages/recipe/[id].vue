@@ -66,7 +66,7 @@
         <div class="grid grid-cols-3 gap-2">
           <div></div>
           <div class="text-black font-bold">100g</div>
-          <div class="text-black font-bold">Portion (~750g)</div>
+          <div class="text-black font-bold">Portion ({{ portionSize }}g)</div>
           <div v-for="value in nutritionalValuesPerPortion" :key="value.title" class="contents">
             <div>{{ value.title }}</div>
             <div>{{ value.amount }}</div>
@@ -117,7 +117,7 @@ const deleteRecipe = async () => {
 };
 
 // Calculate nutritional values per portion
-const portionSize = 750;
+const portionSize = recipe.value?.portionSize;
 const nutritionalValuesPerPortion = computed(() => {
   return recipe.value?.nutritionalValues?.map(value => {
     const amountPerPortion = (value.amount / 100) * portionSize;
