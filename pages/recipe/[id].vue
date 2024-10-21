@@ -95,17 +95,17 @@ const route = useRoute();
 const router = useRouter();
 const recipeStore = useRecipeStore();
 const recipeId = Number(route.params.id);
+const recipe = computed(() => recipeStore.selectedRecipe);
 const modalDelete = ref(false);
 
 onMounted(async () => {
   await recipeStore.fetchRecipeById(recipeId);
-});
 
+});
 onUnmounted(() => {
   recipeStore.clearSelectedRecipe();
-});
 
-const recipe = computed(() => recipeStore.selectedRecipe);
+});
 
 // delete recipe
 const toggleModal = () => {
@@ -121,14 +121,15 @@ const deleteRecipe = async () => {
 };
 
 // Calculate nutritional values per portion
-const portionSize = recipe.value?.portionSize;
+const portionSize = computed(() => recipe.value?.portionSize || 0);
+
 const nutritionalValuesPerPortion = computed(() => {
   return recipe.value?.nutritionalValues?.map(value => {
-    const amountPerPortion = (value.amount / 100) * portionSize;
+    const amountPerPortion = (value.amount / 100) * portionSize.value;
     return {
       title: value.title,
       amount: value.amount,
-      amountPerPortion: amountPerPortion.toFixed(1)
+      amountPerPortion: amountPerPortion.toFixed(0)
     };
   }) || [];
 });

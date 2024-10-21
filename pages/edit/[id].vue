@@ -185,7 +185,7 @@ const removeIngredient = (index: number) => {
   }
 };
 
-const measurementUnits = ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
+const measurementUnits = ['', 'g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
 
 const addNutritionalValue = () => {
   if (!recipe.value.nutritionalValues) {
