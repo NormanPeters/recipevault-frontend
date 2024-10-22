@@ -11,7 +11,7 @@
           <h2>Cooking Time</h2>
           <TextInput type="text"
                      v-model="newRecipe.time"
-                     />
+          />
         </div>
         <!-- Ingredients Header -->
         <div class="flex items-center justify-between mb-4">
@@ -148,29 +148,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useRecipeStore } from '~/stores/recipe';
+import {ref, onMounted} from 'vue';
+import {useRouter} from 'vue-router';
+import {useRecipeStore} from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
-import { Recipe } from '~/services/types';
-import { useRecipe } from '~/composables/useRecipe';
+import {Recipe} from '~/services/types';
+import {TrashIcon} from "@heroicons/vue/24/outline";
 import TextInput from '~/components/TextInput.vue';
-import SelectField from '~/components/SelectField.vue';
-import { TrashIcon } from '@heroicons/vue/24/outline';
+import SelectField from "~/components/SelectField.vue";
+import { useRecipe } from '~/composables/useRecipe';
+
 
 const router = useRouter();
 const recipeStore = useRecipeStore();
-const {
-  measurementUnits,
-  addIngredient,
-  removeIngredient,
-  addNutritionalValue,
-  removeNutritionalValue,
-  addTool,
-  removeTool,
-  addStep,
-  removeStep
-} = useRecipe();
 
 const createNewRecipe = (): Recipe => ({
   title: '',
@@ -184,10 +174,23 @@ const createNewRecipe = (): Recipe => ({
   ingredients: [],
   tools: [],
   steps: [],
-  nutritionalValues: []
+  nutritionalValues: [],
 });
 
 const newRecipe = ref<Recipe>(createNewRecipe());
+
+const {
+  addIngredient,
+  removeIngredient,
+  addTool,
+  removeTool,
+  addStep,
+  removeStep,
+  addNutritionalValue,
+  removeNutritionalValue,
+} = useRecipe(newRecipe);
+
+const measurementUnits = ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
 
 const submitRecipe = async () => {
   console.log('Creating recipe:', newRecipe.value);
@@ -200,8 +203,8 @@ const submitRecipe = async () => {
 };
 
 onMounted(() => {
-  addIngredient(newRecipe.value);
-  addTool(newRecipe.value);
-  addStep(newRecipe.value);
+  addIngredient();
+  addTool();
+  addStep();
 });
 </script>

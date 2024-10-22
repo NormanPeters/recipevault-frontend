@@ -148,12 +148,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { useRecipeStore } from '~/stores/recipe';
+import {ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {useRecipeStore} from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
-import { Recipe } from '~/services/types';
-import { TrashIcon } from "@heroicons/vue/24/outline";
+import {Recipe} from '~/services/types';
+import {TrashIcon} from "@heroicons/vue/24/outline";
 import TextInput from '~/components/TextInput.vue';
 import SelectField from "~/components/SelectField.vue";
 import { useRecipe } from '~/composables/useRecipe';
@@ -164,24 +164,26 @@ const recipeStore = useRecipeStore();
 const recipeId = Number(route.params.id);
 const recipe = ref<Recipe>(recipeStore.selectedRecipe);
 
-const {
-  measurementUnits,
-  addIngredient,
-  removeIngredient,
-  addNutritionalValue,
-  removeNutritionalValue,
-  addTool,
-  removeTool,
-  addStep,
-  removeStep
-} = useRecipe();
-
 onMounted(async () => {
   await recipeStore.fetchRecipeById(recipeId);
 });
+
 onUnmounted(() => {
   recipeStore.clearSelectedRecipe();
 });
+
+const {
+  addIngredient,
+  removeIngredient,
+  addTool,
+  removeTool,
+  addStep,
+  removeStep,
+  addNutritionalValue,
+  removeNutritionalValue,
+} = useRecipe(recipe);
+
+const measurementUnits = ['', 'g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
 
 const saveRecipe = async () => {
   console.log('Updating recipe:', recipe.value);

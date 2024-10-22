@@ -1,70 +1,68 @@
 // composables/useRecipe.ts
-import {Recipe} from '~/services/types';
+import { Ref } from 'vue';
+import { Recipe } from '~/services/types';
 
-export function useRecipe() {
-    const measurementUnits = ['', 'g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'piece'];
-
-    const addIngredient = (recipe: Recipe) => {
-        if (!recipe.ingredients) {
-            recipe.ingredients = [];
+export function useRecipe(recipe: Ref<Recipe>) {
+    const addIngredient = () => {
+        if (!recipe.value.ingredients) {
+            recipe.value.ingredients = [];
         }
-        recipe.ingredients.push({ title: '', amount: 0, unit: 'g', recipe: {} as Recipe });
+        recipe.value.ingredients.push({ title: '', amount: 0, unit: 'g', recipe: {} as Recipe });
     };
 
-    const removeIngredient = (recipe: Recipe, index: number) => {
-        if (recipe.ingredients) {
-            recipe.ingredients.splice(index, 1);
-        }
-    };
-
-    const addNutritionalValue = (recipe: Recipe) => {
-        if (!recipe.nutritionalValues) {
-            recipe.nutritionalValues = [];
-        }
-        recipe.nutritionalValues.push({ title: '', amount: 0, recipe: {} as Recipe });
-    };
-
-    const removeNutritionalValue = (recipe: Recipe, index: number) => {
-        if (recipe.nutritionalValues) {
-            recipe.nutritionalValues.splice(index, 1);
+    const removeIngredient = (index: number) => {
+        if (recipe.value.ingredients) {
+            recipe.value.ingredients.splice(index, 1);
         }
     };
 
-    const addTool = (recipe: Recipe) => {
-        if (!recipe.tools) {
-            recipe.tools = [];
+    const addTool = () => {
+        if (!recipe.value.tools) {
+            recipe.value.tools = [];
         }
-        recipe.tools.push({ title: '', amount: 0, recipe: {} as Recipe });
+        recipe.value.tools.push({ title: '', amount: 0, recipe: {} as Recipe });
     };
 
-    const removeTool = (recipe: Recipe, index: number) => {
-        if (recipe.tools) {
-            recipe.tools.splice(index, 1);
+    const removeTool = (index: number) => {
+        if (recipe.value.tools) {
+            recipe.value.tools.splice(index, 1);
         }
     };
 
-    const addStep = (recipe: Recipe) => {
-        if (!recipe.steps) {
-            recipe.steps = [];
+    const addStep = () => {
+        if (!recipe.value.steps) {
+            recipe.value.steps = [];
         }
-        recipe.steps.push({ stepDescription: '', stepNumber: 0, recipe: {} as Recipe });
+        recipe.value.steps.push({ stepDescription: '', stepNumber: 0, recipe: {} as Recipe });
     };
 
-    const removeStep = (recipe: Recipe, index: number) => {
-        if (recipe.steps) {
-            recipe.steps.splice(index, 1);
+    const removeStep = (index: number) => {
+        if (recipe.value.steps) {
+            recipe.value.steps.splice(index, 1);
+        }
+    };
+
+    const addNutritionalValue = () => {
+        if (!recipe.value.nutritionalValues) {
+            recipe.value.nutritionalValues = [];
+        }
+        recipe.value.nutritionalValues.push({ title: '', amount: 0, recipe: {} as Recipe });
+    };
+
+    const removeNutritionalValue = (index: number) => {
+        if (recipe.value.nutritionalValues) {
+            recipe.value.nutritionalValues.splice(index, 1);
         }
     };
 
     return {
-        measurementUnits,
         addIngredient,
         removeIngredient,
-        addNutritionalValue,
-        removeNutritionalValue,
         addTool,
         removeTool,
         addStep,
         removeStep,
+        addNutritionalValue,
+        removeNutritionalValue,
     };
 }
