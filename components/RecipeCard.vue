@@ -10,8 +10,10 @@
       />
       <!-- Heart Icon (Favorite Button) -->
       <div class="absolute top-2 right-2">
-        <button class="bg-transparent rounded-full text-attention hover:text-attention-hover">
-          <HeartIcon class="h-6 w-6" :class="{ 'text-red-500': recipe?.isFavourite }"/>
+        <button @click.stop.prevent="switchFavorite"
+                class="bg-transparent rounded-full text-attention hover:text-attention-hover focus:outline-none">
+          <SolidHeartIcon v-if="recipe?.favorite" class="h-6 w-6"/>
+          <OutlineHeartIcon v-else class="h-6 w-6"/>
         </button>
       </div>
     </div>
@@ -34,11 +36,13 @@
 </template>
 
 <script setup lang="ts">
-import {HeartIcon} from "@heroicons/vue/24/outline/index.js";
+import {HeartIcon as OutlineHeartIcon} from "@heroicons/vue/24/outline";
+import {HeartIcon as SolidHeartIcon} from "@heroicons/vue/24/solid";
 import {computed} from 'vue';
 import type {Recipe} from "@/services/types";
 
 const props = defineProps<{ recipe: Recipe }>();
+const emit = defineEmits(['update-favorite']);
 
 const caloriesPerPortion = computed(() => {
   if (!props.recipe || !props.recipe.nutritionalValues) return 'N/A';
@@ -48,4 +52,8 @@ const caloriesPerPortion = computed(() => {
   }
   return 'N/A';
 });
+
+const switchFavorite = () => {
+  emit('update-favorite', !props.recipe.isFavourite);
+}
 </script>

@@ -11,7 +11,7 @@ export interface Recipe {
     title?: string;
     description?: string;
     imageUrl?: string;
-    isFavourite?: boolean;
+    favorite?: boolean;
     time?: string;
     sourceUrl?: string;
     servings?: number;

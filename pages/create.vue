@@ -166,7 +166,7 @@ const createNewRecipe = (): Recipe => ({
   title: '',
   description: '',
   imageUrl: '',
-  isFavourite: false,
+  favorite: false,
   time: '30 - 40 min',
   sourceUrl: '',
   portionSize: '',
