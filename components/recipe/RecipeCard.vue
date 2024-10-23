@@ -39,7 +39,7 @@
 import {HeartIcon as OutlineHeartIcon} from "@heroicons/vue/24/outline";
 import {HeartIcon as SolidHeartIcon} from "@heroicons/vue/24/solid";
 import {computed} from 'vue';
-import type {Recipe} from "@/services/types";
+import type {Recipe} from "~/services/types";
 
 const props = defineProps<{ recipe: Recipe }>();
 const emit = defineEmits(['update-favorite']);

@@ -38,6 +38,8 @@ import {useRouter} from 'vue-router';
 import {BookOpenIcon} from "@heroicons/vue/24/solid";
 import {api} from "~/services/api";
 import {EyeIcon, EyeSlashIcon} from "@heroicons/vue/24/outline";
+import TextInput from "~/components/forms/TextInput.vue";
+import PrimaryButton from "~/components/base/PrimaryButton.vue";
 
 // Reactive state for username and password fields
 const username = ref<string>('');
@@ -67,7 +69,7 @@ const togglePasswordVisibility = () => {
 
 <style scoped>
 .main {
-  background-image: url('assets/images/bg-start.jpg');
+  background-image: url('@/assets/images/bg-start.jpg');
   background-size: cover;
 }
 </style>

@@ -9,9 +9,7 @@
         <!-- Add Recipe Button -->
         <PrimaryButton label="+ Add Recipe" @click="router.push('/create')"/>
         <!-- Filter Icon -->
-        <button class="text-btnPrimary hover:text-btnPrimary-hover">
-          <AdjustmentsHorizontalIcon class="h-6 w-6"/>
-        </button>
+        <PrimaryButton label="Filter"/>
         <!-- Settings Icon -->
         <SettingsDropdown/>
       </div>
@@ -21,7 +19,9 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { AdjustmentsHorizontalIcon } from '@heroicons/vue/24/solid';
+import SearchBar from "~/components/forms/SearchBar.vue";
+import PrimaryButton from "~/components/base/PrimaryButton.vue";
+import SettingsDropdown from "~/components/base/UserMenu.vue";
 
 const router = useRouter();
 </script>

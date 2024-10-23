@@ -13,5 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import PrimaryButton from "~/components/base/PrimaryButton.vue";
+
 defineProps(['submitRecipe']);
 </script>

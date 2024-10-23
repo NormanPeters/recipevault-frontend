@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import PrimaryButton from "~/components/base/PrimaryButton.vue";
 
 const router = useRouter();
 const recipeId = Number(router.currentRoute.value.params.id);

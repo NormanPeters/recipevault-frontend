@@ -154,9 +154,10 @@ import {useRecipeStore} from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
 import {Recipe} from '~/services/types';
 import {TrashIcon} from "@heroicons/vue/24/outline";
-import TextInput from '~/components/TextInput.vue';
-import SelectField from "~/components/SelectField.vue";
+import TextInput from '~/components/forms/TextInput.vue';
+import SelectField from "~/components/forms/SelectField.vue";
 import { useRecipe } from '~/composables/useRecipe';
+import PrimaryButton from "~/components/base/PrimaryButton.vue";
 
 
 const router = useRouter();

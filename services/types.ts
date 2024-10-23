@@ -6,20 +6,20 @@ export interface User {
 }
 
 export interface Recipe {
-    recipeId?: number;
-    user?: User;
-    title?: string;
-    description?: string;
-    imageUrl?: string;
-    favorite?: boolean;
-    time?: string;
-    sourceUrl?: string;
-    servings?: number;
-    portionSize?: number;
-    ingredients?: Ingredient[];
-    nutritionalValues?: NutritionalValue[];
-    steps?: RecipeStep[];
-    tools?: Tool[];
+    recipeId: number;
+    user: User;
+    title: string;
+    description: string;
+    imageUrl: string;
+    favorite: boolean;
+    time: string;
+    sourceUrl: string;
+    servings: number;
+    portionSize: number;
+    ingredients: Ingredient[];
+    nutritionalValues: NutritionalValue[];
+    steps: RecipeStep[];
+    tools: Tool[];
 }
 
 export interface Ingredient {

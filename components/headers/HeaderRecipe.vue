@@ -22,6 +22,7 @@
 import { ref, watch } from 'vue';
 import { useRecipeStore } from '~/stores/recipe';
 import { useRouter } from 'vue-router';
+import PrimaryButton from "~/components/base/PrimaryButton.vue";
 
 const router = useRouter();
 const recipeStore = useRecipeStore();
