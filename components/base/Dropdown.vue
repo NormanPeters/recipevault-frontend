@@ -14,7 +14,7 @@
         aria-orientation="vertical"
         aria-labelledby="menu-button"
     >
-      <slot name="logout"/>
+      <slot name="slot1"/>
     </div>
   </transition>
 </template>

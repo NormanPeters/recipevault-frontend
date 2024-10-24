@@ -1,26 +1,33 @@
-<!-- @/pages/index.vue -->
 <template>
   <div class="flex flex-col h-screen">
-    <HeaderIndex/>
+    <HeaderIndex :showFavoritesOnly="showFavoritesOnly" @toggle-favorites="toggleFavorites"/>
     <div class="container grid xl:grid-cols-3 md:grid-cols-2 py-4 gap-4">
-      <RecipeCard v-for="recipe in sortRecipes(recipeStore.recipes)" :key="recipe.recipeId" :recipe="recipe"
+      <RecipeCard v-for="recipe in filteredRecipes" :key="recipe.recipeId" :recipe="recipe"
                   @update-favorite="updateFavorite(recipe)"
-                  @show-favorites="showFavorites(recipeStore.recipes)"/>
+                  />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {useRecipeStore} from '~/stores/recipe';
 import RecipeCard from '~/components/recipe/RecipeCard.vue';
 import HeaderIndex from '~/layouts/header.vue';
 import type {Recipe} from '~/services/types'
 
 const recipeStore = useRecipeStore();
+const filteredRecipes = ref<Recipe[]>([]);
+const showFavoritesOnly = ref<boolean>(JSON.parse(localStorage.getItem('showFavoritesOnly') || 'false'));
 
 onMounted(async () => {
   await recipeStore.fetchRecipes();
+  filterRecipes();
+});
+
+watch(showFavoritesOnly, (newValue) => {
+  localStorage.setItem('showFavoritesOnly', JSON.stringify(newValue));
+  filterRecipes();
 });
 
 const updateFavorite = (recipe) => {
@@ -33,13 +40,15 @@ const updateFavorite = (recipe) => {
   }
 };
 
-const sortRecipes = (recipes: Recipe[]): Recipe[] => {
-  return recipes.sort((a, b) => a.title.localeCompare(b.title));
+const filterRecipes = () => {
+  if (showFavoritesOnly.value) {
+    filteredRecipes.value = recipeStore.recipes.filter((recipe) => recipe.favorite);
+  } else {
+    filteredRecipes.value = recipeStore.recipes;
+  }
 };
 
-const showFavorites = (recipes: Recipe[]): Recipe[] => {
-  return recipes.filter((recipe) => recipe.favorite)
-}
-
-
+const toggleFavorites = () => {
+  showFavoritesOnly.value = !showFavoritesOnly.value;
+};
 </script>
