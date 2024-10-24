@@ -7,6 +7,7 @@ export const useRecipeStore = defineStore('recipe', {
     state: () => ({
         recipes: [] as Recipe[],
         selectedRecipe: null as Recipe | null,
+        searchQuery: '',
     }),
     actions: {
         async fetchRecipes() {
@@ -80,10 +81,28 @@ export const useRecipeStore = defineStore('recipe', {
         },
         clearSelectedRecipe() {
             this.selectedRecipe = null;
-        }
+        },
+        updateSearchQuery(query: string) {
+            this.searchQuery = query;
+        },
     },
     getters: {
         getRecipes: (state) => state.recipes,
         getSelectedRecipe: (state) => state.selectedRecipe,
+        filteredRecipes(state) {
+            if (!state.searchQuery) return state.recipes;
+
+            return state.recipes.filter((recipe) => {
+                const query = state.searchQuery.toLowerCase();
+                return recipe.title.toLowerCase().includes(query) ||
+                    recipe.description.toLowerCase().includes(query) ||
+                    recipe.sourceUrl.toLowerCase().includes(query) ||
+                    recipe.ingredients.some((ingredient) => ingredient.title.toLowerCase().includes(query)) ||
+                    recipe.nutritionalValues.some((value) => value.title.toLowerCase().includes(query)) ||
+                    recipe.steps.some((step) => step.stepDescription.toLowerCase().includes(query)) ||
+                    recipe.tools.some((tool) => tool.title.toLowerCase().includes(query));
+            });
+        },
     },
+
 });
