@@ -13,15 +13,13 @@
     <!-- Dropdown Menu -->
     <Dropdown :isOpen="isOpen" @logout="handleLogout">
       <template #slot1>
-        <DropdownBtn
-            @click="handleLogout"
-            label="Logout"
-            class="text-left px-2 py-2"
-        >
-          <template #linkIcon>
-            <ArrowRightEndOnRectangleIcon class="h-6 w-6 mx-3"/>
-          </template>
-        </DropdownBtn>
+        <div class="flex items-center px-3 py-2">
+          <ArrowRightEndOnRectangleIcon class="h-6 w-6 text-primary"/>
+          <DropdownBtn
+              @click="handleLogout"
+              label="Logout"
+          />
+        </div>
       </template>
     </Dropdown>
   </div>

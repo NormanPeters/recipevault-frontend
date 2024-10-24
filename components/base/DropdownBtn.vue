@@ -5,7 +5,6 @@
       :type="type"
       @click="onClick"
   >
-    <slot name="linkIcon"/>
     {{ label }}
   </button>
 </template>
