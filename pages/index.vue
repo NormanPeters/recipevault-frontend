@@ -35,7 +35,8 @@ onMounted(async () => {
 });
 
 const handleSearchSubmit = (input: string) => {
-  recipeStore.updateSearchQuery(input); // Update search query in the store
+  const formattedInput = input.split(/[\s,]+/).filter(q => q);
+  recipeStore.updateSearchQuery(formattedInput);
 };
 
 const filteredRecipes = computed(() => recipeStore.filteredRecipes);

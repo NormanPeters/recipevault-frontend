@@ -7,7 +7,7 @@ export const useRecipeStore = defineStore('recipe', {
     state: () => ({
         recipes: [] as Recipe[],
         selectedRecipe: null as Recipe | null,
-        searchQuery: '',
+        searchQuery: [] as string[],
     }),
     actions: {
         async fetchRecipes() {
@@ -82,27 +82,29 @@ export const useRecipeStore = defineStore('recipe', {
         clearSelectedRecipe() {
             this.selectedRecipe = null;
         },
-        updateSearchQuery(query: string) {
-            this.searchQuery = query;
+        updateSearchQuery(query: string[]) {
+            this.searchQuery = query.filter(q => q.trim() !== '');
         },
     },
     getters: {
         getRecipes: (state) => state.recipes,
         getSelectedRecipe: (state) => state.selectedRecipe,
         filteredRecipes(state) {
-            if (!state.searchQuery) return state.recipes;
+            if (!state.searchQuery.length) return state.recipes;
 
+            // Check if all query words match some part of the recipe
             return state.recipes.filter((recipe) => {
-                const query = state.searchQuery.toLowerCase();
-                return recipe.title.toLowerCase().includes(query) ||
-                    recipe.description.toLowerCase().includes(query) ||
-                    recipe.sourceUrl.toLowerCase().includes(query) ||
-                    recipe.ingredients.some((ingredient) => ingredient.title.toLowerCase().includes(query)) ||
-                    recipe.nutritionalValues.some((value) => value.title.toLowerCase().includes(query)) ||
-                    recipe.steps.some((step) => step.stepDescription.toLowerCase().includes(query)) ||
-                    recipe.tools.some((tool) => tool.title.toLowerCase().includes(query));
+                const query = state.searchQuery.map(q => q.toLowerCase());
+                return query.every(q =>  // Ensure every query word matches at least one part of the recipe
+                    recipe.title.toLowerCase().includes(q) ||
+                    recipe.description.toLowerCase().includes(q) ||
+                    recipe.sourceUrl.toLowerCase().includes(q) ||
+                    recipe.ingredients.some((ingredient) => ingredient.title.toLowerCase().includes(q)) ||
+                    recipe.nutritionalValues.some((value) => value.title.toLowerCase().includes(q)) ||
+                    recipe.steps.some((step) => step.stepDescription.toLowerCase().includes(q)) ||
+                    recipe.tools.some((tool) => tool.title.toLowerCase().includes(q))
+                );
             });
         },
     },
-
 });

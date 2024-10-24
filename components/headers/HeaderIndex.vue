@@ -28,7 +28,6 @@ import PrimaryButton from "~/components/base/PrimaryButton.vue";
 import UserMenu from "~/components/base/UserMenu.vue";
 
 const router = useRouter();
-
 defineProps<{ isFilterCardOpen: boolean }>();
 const emit = defineEmits(['toggle-filter-card', 'handle-search-submit']);
 
