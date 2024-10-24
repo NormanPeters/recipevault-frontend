@@ -90,6 +90,8 @@
 import {computed, ref} from 'vue';
 import {useRecipeStore} from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
+import TextInput from "~/components/forms/TextInput.vue";
+import ModalDelete from "~/components/modals/ModalDelete.vue";
 
 const route = useRoute();
 const router = useRouter();

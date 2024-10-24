@@ -4,11 +4,10 @@
       <!-- Search Bar -->
       <SearchBar placeholder="Search For Ingredients..."/>
 
+      <!-- Filters Section -->
       <div class="flex flex-1 justify-start items-center">
 
 
-        <!-- Filter Icon -->
-        <FilterMenu @toggle-favorites="$emit('toggle-favorites')" :showFavoritesOnly="showFavoritesOnly" class="pl-4"/>
       </div>
 
       <!-- Buttons Section -->
@@ -16,7 +15,7 @@
         <!-- Add Recipe Button -->
         <PrimaryButton label="+ Add Recipe" @click="router.push('/create')"/>
         <!-- Settings Icon -->
-        <UserMenu/>
+        <UserMenu />
       </div>
     </div>
   </header>
@@ -27,7 +26,6 @@ import {useRouter} from 'vue-router';
 import SearchBar from "~/components/forms/SearchBar.vue";
 import PrimaryButton from "~/components/base/PrimaryButton.vue";
 import UserMenu from "~/components/base/UserMenu.vue";
-import FilterMenu from "~/components/base/FilterMenu.vue";
 
 const router = useRouter();
 

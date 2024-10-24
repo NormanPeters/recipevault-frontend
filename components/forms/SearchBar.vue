@@ -17,7 +17,7 @@ import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline';
 
 defineProps({
   type: {
-    type: [String, Number],
+    type: [String],
     default: '',
   },
   placeholder: {
