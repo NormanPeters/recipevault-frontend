@@ -1,10 +1,13 @@
 <template>
   <div class="flex flex-col h-screen">
-    <HeaderIndex :showFavoritesOnly="showFavoritesOnly" @toggle-favorites="toggleFavorites"/>
-    <div class="container grid xl:grid-cols-3 md:grid-cols-2 py-4 gap-4">
-      <RecipeCard v-for="recipe in filteredRecipes" :key="recipe.recipeId" :recipe="recipe"
-                  @update-favorite="updateFavorite(recipe)"
-                  />
+    <HeaderIndex @toggle-filter-card="toggleFilterCard" :is-filter-card-open="isFilterCardOpen"/>
+    <div class="container">
+      <FilterCard v-if="isFilterCardOpen"/>
+      <div class="grid xl:grid-cols-3 md:grid-cols-2 py-4 gap-4">
+        <RecipeCard v-for="recipe in filteredRecipes" :key="recipe.recipeId" :recipe="recipe"
+                    @update-favorite="updateFavorite(recipe)"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -15,20 +18,19 @@ import {useRecipeStore} from '~/stores/recipe';
 import RecipeCard from '~/components/recipe/RecipeCard.vue';
 import HeaderIndex from '~/layouts/header.vue';
 import type {Recipe} from '~/services/types'
+import FilterCard from "~/components/recipe/FilterCard.vue";
 
 const recipeStore = useRecipeStore();
 const filteredRecipes = ref<Recipe[]>([]);
-const showFavoritesOnly = ref<boolean>(JSON.parse(localStorage.getItem('showFavoritesOnly') || 'false'));
+const isFilterCardOpen = ref(false);
 
 onMounted(async () => {
   await recipeStore.fetchRecipes();
-  filterRecipes();
 });
 
-watch(showFavoritesOnly, (newValue) => {
-  localStorage.setItem('showFavoritesOnly', JSON.stringify(newValue));
-  filterRecipes();
-});
+const toggleFilterCard = () => {
+  isFilterCardOpen.value = !isFilterCardOpen.value;
+}
 
 const updateFavorite = (recipe) => {
   recipe.favorite = !recipe.favorite;
@@ -40,15 +42,13 @@ const updateFavorite = (recipe) => {
   }
 };
 
-const filterRecipes = () => {
-  if (showFavoritesOnly.value) {
-    filteredRecipes.value = recipeStore.recipes.filter((recipe) => recipe.favorite);
-  } else {
-    filteredRecipes.value = recipeStore.recipes;
-  }
-};
+const sortRecipes = (recipes: Recipe[]): Recipe[] => {
+  return recipes.sort((a, b) => {
+    return a.title.localeCompare(b.title);
+  });
+}
 
-const toggleFavorites = () => {
-  showFavoritesOnly.value = !showFavoritesOnly.value;
-};
+watch(() => recipeStore.recipes, (newRecipes) => {
+  filteredRecipes.value = sortRecipes(newRecipes);
+});
 </script>

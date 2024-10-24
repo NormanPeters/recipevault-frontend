@@ -5,9 +5,9 @@
       <SearchBar placeholder="Search For Ingredients..."/>
 
       <!-- Filters Section -->
-      <div class="flex flex-1 justify-start items-center">
-
-
+      <div class="flex flex-1 justify-start items-center px-2">
+        <PrimaryButton v-if="!isFilterCardOpen" label="Filter" @click="$emit('toggle-filter-card')"/>
+        <PrimaryButton v-else label="Close" @click="$emit('toggle-filter-card')"/>
       </div>
 
       <!-- Buttons Section -->
@@ -26,9 +26,8 @@ import {useRouter} from 'vue-router';
 import SearchBar from "~/components/forms/SearchBar.vue";
 import PrimaryButton from "~/components/base/PrimaryButton.vue";
 import UserMenu from "~/components/base/UserMenu.vue";
-
 const router = useRouter();
 
-defineProps<{ showFavoritesOnly: boolean }>();
-defineEmits(['toggle-favorites']);
+defineEmits(['toggle-filter-card']);
+defineProps<{ isFilterCardOpen: boolean }>();
 </script>
