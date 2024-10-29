@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
     theme: {
         container: {
@@ -46,7 +47,7 @@ module.exports = {
         },
     },
     plugins: [
-        function ({ addBase, theme }) {
+        function ({ addBase, theme }: { addBase: Function; theme: Function }) {
             addBase({
                 'body': {
                     fontFamily: theme('fontFamily.montserrat'),

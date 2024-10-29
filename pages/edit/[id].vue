@@ -152,7 +152,7 @@ import {ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {useRecipeStore} from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
-import {Recipe} from '~/services/types';
+import type {Recipe} from '~/services/types';
 import {TrashIcon} from "@heroicons/vue/24/outline";
 import TextInput from '~/components/forms/TextInput.vue';
 import SelectField from "~/components/forms/SelectField.vue";
@@ -163,7 +163,23 @@ const router = useRouter();
 const route = useRoute();
 const recipeStore = useRecipeStore();
 const recipeId = Number(route.params.id);
-const recipe = ref<Recipe>(recipeStore.selectedRecipe);
+const recipe = ref<Recipe>(recipeStore.selectedRecipe || {
+  recipeId: 0,
+  user: { id: 0, username: '', password: '', recipes: [] },
+  title: '',
+  description: '',
+  imageUrl: '',
+  favorite: false,
+  time: '',
+  sourceUrl: '',
+  servings: 0,
+  portionSize: 0,
+  ingredients: [],
+  nutritionalValues: [],
+  steps: [],
+  tools: [],
+});
+
 
 onMounted(async () => {
   await recipeStore.fetchRecipeById(recipeId);

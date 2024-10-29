@@ -1,13 +1,14 @@
 // services/types.ts
 export interface User {
-    id: number;
+    id?: number;
     username: string;
-    recipes: Recipe[];
+    password: string;
+    recipes?: Recipe[];
 }
 
 export interface Recipe {
-    recipeId: number;
-    user: User;
+    recipeId?: number;
+    user?: User;
     title: string;
     description: string;
     imageUrl: string;

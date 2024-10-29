@@ -152,7 +152,7 @@ import {ref, onMounted} from 'vue';
 import {useRouter} from 'vue-router';
 import {useRecipeStore} from '~/stores/recipe';
 import Header from '~/layouts/header.vue';
-import {Recipe} from '~/services/types';
+import type {Recipe} from '~/services/types';
 import {TrashIcon} from "@heroicons/vue/24/outline";
 import TextInput from '~/components/forms/TextInput.vue';
 import SelectField from "~/components/forms/SelectField.vue";
@@ -170,7 +170,7 @@ const createNewRecipe = (): Recipe => ({
   favorite: false,
   time: '30 - 40 min',
   sourceUrl: '',
-  portionSize: '',
+  portionSize: 100,
   servings: 1,
   ingredients: [],
   tools: [],

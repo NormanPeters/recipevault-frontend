@@ -1,7 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import type { NuxtPage } from 'nuxt/schema'
 
-export default defineNuxtConfig({
+defineNuxtConfig({
     modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxt/image'],
     devtools: {enabled: true},
     compatibilityDate: '2024-04-03',
@@ -14,10 +13,5 @@ export default defineNuxtConfig({
                 },
             ],
         },
-    },
-    pinia: {
-        autoImports: [
-            'defineStore',
-        ],
     },
 })

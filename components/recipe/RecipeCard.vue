@@ -54,6 +54,6 @@ const caloriesPerPortion = computed(() => {
 });
 
 const switchFavorite = () => {
-  emit('update-favorite', !props.recipe.isFavourite);
+  emit('update-favorite', !props.recipe.favorite);
 }
 </script>

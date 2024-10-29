@@ -27,7 +27,7 @@
         </div>
 
         <!-- Ingredients Table -->
-        <div v-for="ingredient in recipe.ingredients" :key="ingredient.id" class="grid grid-cols-2 mb-1">
+        <div v-for="ingredient in recipe.ingredients" :key="ingredient.ingredientId" class="grid grid-cols-2 mb-1">
           <div>{{ ingredient.amount }} {{ ingredient.unit }}</div>
           <div>{{ ingredient.title }}</div>
         </div>
@@ -113,9 +113,10 @@ onUnmounted(() => {
 const toggleModal = () => {
   modalDelete.value = !modalDelete.value;
 }
+
 const deleteRecipe = async () => {
   const selectedRecipe = recipeStore.selectedRecipe;
-  if (selectedRecipe) {
+  if (selectedRecipe && selectedRecipe.recipeId !== undefined) {
     await recipeStore.deleteRecipe(selectedRecipe.recipeId);
     modalDelete.value = false;
   }
