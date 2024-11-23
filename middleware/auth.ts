@@ -1,13 +1,18 @@
-// middleware/auth.ts
-import jwtDecode from 'jwt-decode';
+import jwt from 'jsonwebtoken';
 
 export default defineNuxtRouteMiddleware((to, from) => {
     const token = localStorage.getItem('authToken');
 
     if (token) {
         try {
-            const decodedToken = (jwtDecode as any)(token);
-            const currentTime = Date.now() / 1000;
+            // Decode the token payload
+            const decodedToken = jwt.decode(token) as { exp: number; [key: string]: any };
+
+            if (!decodedToken || typeof decodedToken.exp === 'undefined') {
+                throw new Error('Invalid token structure');
+            }
+
+            const currentTime = Date.now() / 1000; // Current time in seconds
 
             if (decodedToken.exp < currentTime) {
                 localStorage.removeItem('authToken');

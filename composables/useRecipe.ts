@@ -1,6 +1,6 @@
 // composables/useRecipe.ts
-import { Ref } from 'vue';
-import { Recipe } from '~/services/types';
+import type { Ref } from 'vue';
+import type { Recipe } from '~/services/types';
 
 export function useRecipe(recipe: Ref<Recipe>) {
     const addIngredient = () => {

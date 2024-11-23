@@ -14,7 +14,7 @@
     "@nuxt/image": "^1.8.1",
     "@pinia/nuxt": "^0.5.4",
     "axios": "^1.7.7",
-    "jwt-decode": "^4.0.0",
+    "jsonwebtoken": "^9.0.2",
     "nuxt": "^3.13.2",
     "pinia": "^2.2.4",
     "vue": "latest",
@@ -22,7 +22,8 @@
     "vue3-promise-dialog": "^0.3.4"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.12.1"
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "@types/jsonwebtoken": "^9.0.7"
   },
   "overrides": {
     "vue": "latest"

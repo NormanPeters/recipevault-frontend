@@ -21,6 +21,7 @@ export interface Recipe {
     nutritionalValues: NutritionalValue[];
     steps: RecipeStep[];
     tools: Tool[];
+    tags: Tag[];
 }
 
 export interface Ingredient {
@@ -50,4 +51,34 @@ export interface Tool {
     title: string;
     amount: number;
     recipe: Recipe;
+}
+
+export interface Tag {
+    tagId?: number;
+    tagType: TagType;
+    recipe: Recipe;
+}
+
+export enum TagType {
+    MEAT = "MEAT",
+    FISH = "FISH",
+    VEGETARIAN = "VEGETARIAN",
+    VEGAN = "VEGAN",
+    EASY = "EASY",
+    MEDIUM = "MEDIUM",
+    HARD = "HARD",
+    APPETIZER = "APPETIZER",
+    MAIN_COURSE = "MAIN_COURSE",
+    DESSERT = "DESSERT",
+    BREAKFAST = "BREAKFAST",
+    SOUP = "SOUP",
+    CASSEROLE = "CASSEROLE",
+    SNACK = "SNACK",
+    BEVERAGE = "BEVERAGE",
+    LACTOSE_FREE = "LACTOSE_FREE",
+    LOW_CARB = "LOW_CARB",
+    GLUTEN_FREE = "GLUTEN_FREE",
+    PALEO = "PALEO",
+    LOW_SUGAR = "LOW_SUGAR",
+    CLEAN_EATING = "CLEAN_EATING"
 }

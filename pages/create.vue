@@ -176,6 +176,7 @@ const createNewRecipe = (): Recipe => ({
   tools: [],
   steps: [],
   nutritionalValues: [],
+  tags: []
 });
 
 const newRecipe = ref<Recipe>(createNewRecipe());
