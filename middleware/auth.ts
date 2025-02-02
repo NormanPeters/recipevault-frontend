@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import { decodeJwt } from 'jose';
 
 export default defineNuxtRouteMiddleware((to, from) => {
     const token = localStorage.getItem('authToken');
@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     if (token) {
         try {
             // Decode the token payload
-            const decodedToken = jwt.decode(token) as { exp: number; [key: string]: any };
+            const decodedToken = decodeJwt(token);
 
             if (!decodedToken || typeof decodedToken.exp === 'undefined') {
                 throw new Error('Invalid token structure');

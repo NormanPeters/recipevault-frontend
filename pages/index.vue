@@ -26,6 +26,7 @@ import {useRecipeStore} from '~/stores/recipe';
 import RecipeCard from '~/components/recipe/RecipeCard.vue';
 import HeaderIndex from '~/layouts/header.vue';
 import FilterCard from "~/components/recipe/FilterCard.vue";
+import type {Recipe} from "~/services/types";
 
 const recipeStore = useRecipeStore();
 const isFilterCardOpen = ref(false);
@@ -45,8 +46,8 @@ const toggleFilterCard = () => {
   isFilterCardOpen.value = !isFilterCardOpen.value;
 };
 
-const updateFavorite = (recipe) => {
+const updateFavorite = (recipe: Recipe) => {
   recipe.favorite = !recipe.favorite;
-  recipeStore.updateRecipe(recipe.recipeId, recipe); // Update the recipe in the store
+  recipeStore.updateRecipe(recipe.recipeId!, recipe); // Update the recipe in the store
 };
 </script>
