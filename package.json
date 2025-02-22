@@ -23,7 +23,9 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "@types/jsonwebtoken": "^9.0.7"
+    "@types/jsonwebtoken": "^9.0.7",
+    "prettier": "^3.5.2",
+    "prettier-plugin-tailwindcss": "^0.6.11"
   },
   "overrides": {
     "vue": "latest"

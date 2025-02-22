@@ -1,8 +1,8 @@
 <!-- @/components/SelectField.vue -->
 <template>
   <select
-      class="w-full rounded shadow-sm border py-2 px-2 leading-tight focus:outline-none focus:shadow-outline focus:border-primary"
-      v-model="selectedValue"
+    class="focus:shadow-outline w-full rounded border px-2 py-2 leading-tight shadow-sm focus:border-primary focus:outline-none"
+    v-model="selectedValue"
   >
     <option v-for="option in options" :key="option.value" :value="option.value">
       {{ option.text }}
@@ -20,10 +20,10 @@ const props = defineProps({
   modelValue: String,
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const selectedValue = ref(props.modelValue);
 watch(selectedValue, (newValue) => {
-  emit('update:modelValue', newValue);
+  emit("update:modelValue", newValue);
 });
 </script>

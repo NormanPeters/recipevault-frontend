@@ -1,39 +1,41 @@
 <!-- SearchBar.vue -->
 <template>
-  <div class="flex items-center bg-gray-100 rounded-full px-2 py-1 shadow-sm border focus-within:border-primary focus-within:shadow-outline w-full max-w-xs">
+  <div
+    class="focus-within:shadow-outline flex w-full max-w-xs items-center rounded-full border bg-gray-100 px-2 py-1 shadow-sm focus-within:border-primary"
+  >
     <input
-        class="bg-transparent outline-none placeholder-gray-400 leading-tight px-3 w-full"
-        :type="type"
-        :placeholder="placeholder"
-        v-model="inputValue"
-        @input="submitInput"
+      class="w-full bg-transparent px-3 leading-tight placeholder-gray-400 outline-none"
+      :type="type"
+      :placeholder="placeholder"
+      v-model="inputValue"
+      @input="submitInput"
     />
     <button class="ml-2" @click="submitInput">
-      <MagnifyingGlassIcon class="h-6 w-6"/>
+      <MagnifyingGlassIcon class="h-6 w-6" />
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline';
-import { ref } from 'vue';
+import { MagnifyingGlassIcon } from "@heroicons/vue/24/outline";
+import { ref } from "vue";
 
-const inputValue = ref<string>('');
+const inputValue = ref<string>("");
 
 const props = defineProps({
   type: {
     type: [String],
-    default: '',
+    default: "",
   },
   placeholder: {
     type: String,
-    default: 'Search...',
+    default: "Search...",
   },
 });
 
-const emit = defineEmits(['submit']);
+const emit = defineEmits(["submit"]);
 
 const submitInput = () => {
-  emit('submit', inputValue.value);
+  emit("submit", inputValue.value);
 };
 </script>

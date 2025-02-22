@@ -1,9 +1,9 @@
 <!-- @/components/PrimaryButton.vue-->
 <template>
   <button
-      class="w-full flex flex-row items-center text-primary hover:text-btnPrimary-hover text-sm font-bold rounded-full focus:outline-none focus:shadow-outline py-1 px-2"
-      :type="type"
-      @click="onClick"
+    class="focus:shadow-outline flex w-full flex-row items-center rounded-full px-2 py-1 text-sm font-bold text-primary hover:text-btnPrimary-hover focus:outline-none"
+    :type="type"
+    @click="onClick"
   >
     {{ label }}
   </button>
@@ -17,7 +17,7 @@ defineProps({
   },
   type: {
     type: String,
-    default: 'button',
+    default: "button",
   },
   onClick: Function,
 });

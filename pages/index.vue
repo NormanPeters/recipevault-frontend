@@ -1,32 +1,33 @@
 <!-- pages/index.vue -->
 <template>
-  <div class="flex flex-col h-screen">
-    <HeaderIndex @toggle-filter-card="toggleFilterCard"
-                 :is-filter-card-open="isFilterCardOpen"
-                 @handle-search-submit="handleSearchSubmit"/>
-
+  <div class="flex h-screen flex-col">
+    <HeaderIndex
+      @toggle-filter-card="toggleFilterCard"
+      :is-filter-card-open="isFilterCardOpen"
+      @handle-search-submit="handleSearchSubmit"
+    />
 
     <div class="container">
-      <FilterCard v-if="isFilterCardOpen"/>
-      <div class="grid xl:grid-cols-3 md:grid-cols-2 py-4 gap-4">
-        <RecipeCard v-for="recipe in filteredRecipes"
-                    :key="recipe.recipeId"
-                    :recipe="recipe"
-                    @update-favorite="updateFavorite(recipe)"
+      <FilterCard v-if="isFilterCardOpen" />
+      <div class="grid gap-4 py-4 md:grid-cols-2 xl:grid-cols-3">
+        <RecipeCard
+          v-for="recipe in filteredRecipes"
+          :key="recipe.recipeId"
+          :recipe="recipe"
+          @update-favorite="updateFavorite(recipe)"
         />
       </div>
     </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
-import {useRecipeStore} from '~/stores/recipe';
-import RecipeCard from '~/components/recipe/RecipeCard.vue';
-import HeaderIndex from '~/layouts/header.vue';
+import { onMounted, ref } from "vue";
+import { useRecipeStore } from "~/stores/recipe";
+import RecipeCard from "~/components/recipe/RecipeCard.vue";
+import HeaderIndex from "~/layouts/header.vue";
 import FilterCard from "~/components/recipe/FilterCard.vue";
-import type {Recipe} from "~/services/types";
+import type { Recipe } from "~/services/types";
 
 const recipeStore = useRecipeStore();
 const isFilterCardOpen = ref(false);
@@ -36,7 +37,7 @@ onMounted(async () => {
 });
 
 const handleSearchSubmit = (input: string) => {
-  const formattedInput = input.split(/[\s,]+/).filter(q => q);
+  const formattedInput = input.split(/[\s,]+/).filter((q) => q);
   recipeStore.updateSearchQuery(formattedInput);
 };
 

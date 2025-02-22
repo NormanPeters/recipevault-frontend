@@ -1,13 +1,7 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-<div class="rounded border border-gray-300 p-4 mt-4">
-
-</div>
+  <div class="mt-4 rounded border border-gray-300 p-4"></div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
